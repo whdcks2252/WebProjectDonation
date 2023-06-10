@@ -9,5 +9,4 @@ public class DonationWebApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DonationWebApplication.class, args);
 	}
-	///gdgdgdsdafsdafasdfsadsdffsdafsdafsdafsdafsdafsdafsda
 }
