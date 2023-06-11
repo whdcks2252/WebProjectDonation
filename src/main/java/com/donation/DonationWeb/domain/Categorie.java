@@ -1,4 +1,4 @@
-package com.donation.DonationWeb.Domain;
+package com.donation.DonationWeb.domain;
 
 import lombok.Getter;
 
