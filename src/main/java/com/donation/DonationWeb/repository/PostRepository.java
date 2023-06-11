@@ -2,6 +2,7 @@ package com.donation.DonationWeb.repository;
 
 import com.donation.DonationWeb.domain.Post;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
