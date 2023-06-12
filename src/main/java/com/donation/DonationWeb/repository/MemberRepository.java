@@ -3,7 +3,7 @@ package com.donation.DonationWeb.repository;
 
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.service.MemberUpdateDto;
+import com.donation.DonationWeb.dto.MemberUpdateDto;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.donation.DonationWeb.service;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.dto.MemberUpdateDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MemberService {
 

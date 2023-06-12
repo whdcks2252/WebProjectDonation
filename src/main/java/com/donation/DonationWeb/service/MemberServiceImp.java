@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.service;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.dto.MemberUpdateDto;
 import com.donation.DonationWeb.repository.MemberRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

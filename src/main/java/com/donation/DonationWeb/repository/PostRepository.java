@@ -1,31 +1,19 @@
 package com.donation.DonationWeb.repository;
 
 import com.donation.DonationWeb.domain.Post;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.donation.DonationWeb.dto.UpdatePostRequest;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class PostRepository {
+public interface PostRepository {
 
-    private final EntityManager em;
+    Post save(Post item);
 
-    //게시물 생성
-    public void save(Post post) {
-        em.persist(post);
-    }
+    void update(Long itemId, UpdatePostRequest updateParam);
 
-    //게시물 불러오기
-    public Post findOne(Long id) {
-        return em.find(Post.class, id);
-    }
+    Optional<Post> findById(Long id);
 
-    public List<Post> findAll() {
-        return em.createQuery("select p from Post p",Post.class).getResultList();
-    }
+    List<Post> findAll();
 
 }
