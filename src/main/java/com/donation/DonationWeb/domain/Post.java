@@ -17,14 +17,6 @@ public class Post {
     private Long id;
 
 
-    //생성시간
-    @Column(name = "post_cre_at")
-    private LocalDateTime createTime;
-
-    //마지막 수정 시간
-    @Column(name = "post_up_time")
-    private LocalDateTime updateTime;
-
     //제목
     @Column(length = 500,nullable = false)
     private String title;
@@ -33,6 +25,10 @@ public class Post {
     @Column(name="post_content", nullable = false)
     @Lob
     private String content;
+
+    //게시물생성시간 마지막수정시간
+    @Embedded
+    private ObjectTime objectTime;
 
     //진행상태(진행중,종료)
     @Enumerated(EnumType.STRING)

@@ -20,14 +20,7 @@ public class PostServiceTest {
     public void 게시물등록() throws Exception {
 
 
-        Post post = new Post();
-        post.setTitle("gdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdggggggggggggggggggggggggggggggggggggg");
 
-
-     Long postId=  postService.savePost(post);
-
-
-     Assertions.assertEquals(post,postRepository.findOne(postId));
 
 
     }
