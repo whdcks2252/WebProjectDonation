@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
+@Builder// 테스트 용
 public class UpdatePostRequest {
     private String title;
     private String content;

@@ -2,7 +2,7 @@ package com.donation.DonationWeb.post.service;
 
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
-import com.donation.DonationWeb.post.dto.addPostRequest;
+import com.donation.DonationWeb.post.dto.AddPostRequest;
 import com.donation.DonationWeb.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class PostServiceImp implements PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Post savePost(addPostRequest addPostRequest){ return postRepository.save(addPostRequest.toEntity());
+    public Post savePost(AddPostRequest addPostRequest){ return postRepository.save(addPostRequest.toEntity());
     }
 
     public List<Post> findAll() {return postRepository.findAll();}

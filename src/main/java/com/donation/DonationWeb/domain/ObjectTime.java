@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-public class ObjectTime {
+public abstract class ObjectTime {
     //생성시간 업데이트 시간
     public ObjectTime() {
     }

@@ -3,21 +3,17 @@ package com.donation.DonationWeb.domain;
 
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@DynamicUpdate
 public class Post extends ObjectTime{
     @Builder
     public Post(String title, String content,PostStatus postStatus) {
@@ -47,11 +43,11 @@ public class Post extends ObjectTime{
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    private Categorie categorie;
+    private Category categorie;
 
 
     //업데이트 null검증
-    public void updateValidate(UpdatePostRequest updatePostRequest) {
+    public   void updateValidate(UpdatePostRequest updatePostRequest) {
         if(ObjectUtils.isEmpty(updatePostRequest))
             throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
         if (updatePostRequest.getTitle() != null) {
