@@ -1,13 +1,18 @@
 package com.donation.DonationWeb.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class Member {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
+public class Member extends ObjectTime {
 
     @Id
     @GeneratedValue
@@ -36,9 +41,6 @@ public class Member {
     @Embedded
     private Address address;
 
-    //생성시간, 마지막수정시간
-    @Embedded
-    private ObjectTime objectTime;
 
     //서비스 이용약관
     @Enumerated(EnumType.STRING)

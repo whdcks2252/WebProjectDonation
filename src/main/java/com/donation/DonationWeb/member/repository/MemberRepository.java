@@ -1,9 +1,9 @@
-package com.donation.DonationWeb.repository;
+package com.donation.DonationWeb.member.repository;
 
 
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.dto.MemberUpdateDto;
+import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 
 import java.util.List;
 

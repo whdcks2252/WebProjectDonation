@@ -1,8 +1,13 @@
 package com.donation.DonationWeb.domain;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import com.donation.DonationWeb.post.dto.UpdatePostRequest;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,12 +15,20 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Post {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
+public class Post extends ObjectTime{
+    @Builder
+    public Post(String title, String content,PostStatus postStatus) {
+        this.title = title;
+        this.content = content;
+        this.postStatus = postStatus;
+    }
     @Id
     @GeneratedValue
     @Column(name = "post_num")
     private Long id;
-
 
     //제목
     @Column(length = 500,nullable = false)
@@ -26,9 +39,6 @@ public class Post {
     @Lob
     private String content;
 
-    //게시물생성시간 마지막수정시간
-    @Embedded
-    private ObjectTime objectTime;
 
     //진행상태(진행중,종료)
     @Enumerated(EnumType.STRING)
@@ -40,5 +50,19 @@ public class Post {
     private Categorie categorie;
 
 
+    //업데이트 null검증
+    public void updateValidate(UpdatePostRequest updatePostRequest) {
+        if(ObjectUtils.isEmpty(updatePostRequest))
+            throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
+        if (updatePostRequest.getTitle() != null) {
+            this.title = updatePostRequest.getTitle();
+        }
+        if (updatePostRequest.getContent() != null) {
+            this.content = updatePostRequest.getContent();
+        }
+        if (updatePostRequest.getPostStatus() != null) {
+            this.postStatus = updatePostRequest.getPostStatus();
+        }
+    }
 
 }

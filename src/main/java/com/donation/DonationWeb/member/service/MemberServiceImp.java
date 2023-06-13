@@ -1,8 +1,8 @@
-package com.donation.DonationWeb.service;
+package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.dto.MemberUpdateDto;
-import com.donation.DonationWeb.repository.MemberRepositoryImp;
+import com.donation.DonationWeb.member.dto.MemberUpdateDto;
+import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
