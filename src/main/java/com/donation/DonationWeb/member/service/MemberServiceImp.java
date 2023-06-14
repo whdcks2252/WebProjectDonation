@@ -41,7 +41,7 @@ public class MemberServiceImp implements MemberService{
     }
 
     @Override
-    public List<Member> findMembers() {return memberRepository.findAll();}
+    public List<Member> findAll() {return memberRepository.findAll();}
 
     @Override
     public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));}

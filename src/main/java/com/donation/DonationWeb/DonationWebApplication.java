@@ -1,6 +1,7 @@
 package com.donation.DonationWeb;
 
 import com.donation.DonationWeb.category.service.CategoryServiceImp;
+import com.donation.DonationWeb.member.service.MemberServiceImp;
 import com.donation.DonationWeb.post.service.PostServiceImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +20,7 @@ public class DonationWebApplication {
 		}
 	@Bean
 	@Profile("local")
-	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp) {
-		return new TestDataInit(itemRepository,categoryServiceImp,em);
+	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp, MemberServiceImp memberServiceImp) {
+		return new TestDataInit(itemRepository,categoryServiceImp,em,memberServiceImp);
 	}
 }

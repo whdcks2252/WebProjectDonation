@@ -24,21 +24,29 @@ public class AddMemberRequest {
     private String email;
     //이용 약관
     private ServiceAgreement serviceAgreement;
+    //address
+    private String city;
+    private String street;
+    private String zipcode;
 
-    public AddMemberRequest(String memberId, String memberNickname, String password, String memberName, String memberPhone, String email) {
+    public AddMemberRequest(String memberId, String memberNickname, String password,
+                            String memberName, String memberPhone, String email, String city,String street,String zipcode) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.password = password;
         this.memberName = memberName;
         this.memberPhone = memberPhone;
         this.email = email;
+        this.city = city;
+        this.street = street;
+        this.zipcode = zipcode;
     }
 
     public Member toEntity(ServiceAgreement serviceAgreement) {
         return Member.builder()
                 .memberId(this.memberId).memberNickname(this.memberNickname)
                 .password(this.password).memberName(this.memberName).memberPhone(this.memberPhone)
-                .email(this.email).svcAge(serviceAgreement)
+                .email(this.email).svcAge(serviceAgreement).address(new Address(this.city,this.street,this.zipcode))
                 .build();
     }
 

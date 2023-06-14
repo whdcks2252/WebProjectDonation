@@ -10,6 +10,8 @@ public class MemberUpdateDto {
     private String memberNickname;
     private String memberPhone;
     private String email;
-
+    private String city;
+    private String street;
+    private String zipcode;
 
 }

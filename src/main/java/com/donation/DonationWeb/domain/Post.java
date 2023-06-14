@@ -45,6 +45,10 @@ public class Post extends ObjectTime{
     @JoinColumn(name = "category_id")
     private Category categorie;
 
+    //카테고리 연관관계 다대일 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     //업데이트 null검증 상태만 null 가능 검증
     public   void updateValidate(UpdatePostRequest updatePostRequest) {

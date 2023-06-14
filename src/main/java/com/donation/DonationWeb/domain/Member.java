@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Member extends ObjectTime {
 
     @Builder
-    public Member(String memberId,String password, String memberNickname, String memberName, String memberPhone,String email,ServiceAgreement svcAge ) {
+    public Member(String memberId,String password, String memberNickname, String memberName, String memberPhone,String email,ServiceAgreement svcAge,Address address ) {
         this.memberId = memberId;
         this.password = password;
         this.memberNickname = memberNickname;
@@ -27,6 +27,7 @@ public class Member extends ObjectTime {
         this.memberPhone = memberPhone;
         this.email = email;
         this.svcAge=svcAge;
+        this.address = address;
     }
 
     @Id
@@ -71,5 +72,9 @@ public class Member extends ObjectTime {
                 this.memberPhone = memberUpdateDto.getMemberPhone();
             if (memberUpdateDto.getEmail() != null)
                 this.email = memberUpdateDto.getEmail();
-    }
+            if (memberUpdateDto.getCity() != null)
+                if (memberUpdateDto.getStreet() != null)
+                    if (memberUpdateDto.getStreet() != null)
+                        this.address = new Address(memberUpdateDto.getCity(), memberUpdateDto.getStreet(), memberUpdateDto.getZipcode());
+                                    }
 }
