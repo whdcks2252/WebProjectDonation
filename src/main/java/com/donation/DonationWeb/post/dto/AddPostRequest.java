@@ -1,5 +1,6 @@
 package com.donation.DonationWeb.post.dto;
 
+import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.PostStatus;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,11 @@ public class AddPostRequest {
         this.content = content;
     }
 
-    public Post toEntity() {
-        return Post.builder().title(this.title).content(this.content).postStatus(this.postStatus).build();
+    public Post toEntity(Category categorie) {
+        return Post.builder()
+                .title(this.title).content(this.content)
+                .postStatus(this.postStatus).categorie(categorie)
+                .build();
     }
 
 }

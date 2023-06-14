@@ -33,8 +33,8 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public Optional<Category> findById(Long categoryId) {
-        return categoryRepository.findById(categoryId);
+    public Category findById(Long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("not found : " + categoryId));
     }
 
     /**

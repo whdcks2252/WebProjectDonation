@@ -12,7 +12,7 @@ public interface CategoryService {
 
     public List<Category> findAll();
 
-    public Optional<Category> findById(Long categoryId);
+    public Category(Long categoryId);
 
     public void updateCategory(Long categoryId, UpdateCategoryRequest upCategory) ;
 

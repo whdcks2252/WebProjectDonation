@@ -1,9 +1,13 @@
 package com.donation.DonationWeb.domain;
 
+import com.donation.DonationWeb.member.dto.MemberUpdateDto;
+import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +17,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends ObjectTime {
+
+    @Builder
+    public Member(String memberId,String password, String memberNickname, String memberName, String memberPhone,String email,ServiceAgreement svcAge ) {
+        this.memberId = memberId;
+        this.password = password;
+        this.memberNickname = memberNickname;
+        this.memberName=memberName;
+        this.memberPhone = memberPhone;
+        this.email = email;
+        this.svcAge=svcAge;
+    }
 
     @Id
     @GeneratedValue
@@ -46,5 +61,15 @@ public class Member extends ObjectTime {
     @Enumerated(EnumType.STRING)
     private ServiceAgreement svcAge;
 
-
+    //업데이트
+    public   void updateValidate(MemberUpdateDto memberUpdateDto) {
+            if(ObjectUtils.isEmpty(memberUpdateDto))
+                throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
+            if (memberUpdateDto.getMemberNickname() != null)
+                this.memberNickname = memberUpdateDto.getMemberNickname();
+            if (memberUpdateDto.getMemberPhone() != null)
+                this.memberPhone = memberUpdateDto.getMemberPhone();
+            if (memberUpdateDto.getEmail() != null)
+                this.email = memberUpdateDto.getEmail();
+    }
 }

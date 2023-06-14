@@ -1,6 +1,8 @@
 package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,32 +21,31 @@ public class MemberServiceImp implements MemberService{
 
     @Transactional
     @Override
-    public Member save(Member member){
-        return memberRepository.save(member);
+    public Member save(AddMemberRequest addMemberRequest, ServiceAgreement sva){
+        return memberRepository.save(addMemberRequest.toEntity(sva));
     }
 
+    /**
+     * 영속성 컨텍스트가 자동 변경
+     */
+    @Transactional
     @Override
     public void update(Long itemId, MemberUpdateDto updateParam) {
-
+            memberRepository.update(itemId,updateParam);
     }
 
+    @Transactional
     @Override
-    public void delete(long id) {
-
+    public void delete(Long id) {
+        memberRepository.delete(id);
     }
 
     @Override
     public List<Member> findMembers() {return memberRepository.findAll();}
 
     @Override
-    public Member findById(Long memberId) {return memberRepository.findOne(memberId);}
+    public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));}
 
-    /**
-     * 영속성 컨텍스트가 자동 변경
-     */
-    @Transactional
-    public void updatePost(Long id,String content) {
-        Member member = memberRepository.findOne(id);
-    }
+
 
 }

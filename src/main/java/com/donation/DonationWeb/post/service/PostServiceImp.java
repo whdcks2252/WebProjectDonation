@@ -1,5 +1,6 @@
 package com.donation.DonationWeb.post.service;
 
+import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.post.dto.AddPostRequest;
@@ -19,12 +20,12 @@ public class PostServiceImp implements PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Post savePost(AddPostRequest addPostRequest){ return postRepository.save(addPostRequest.toEntity());
+    public Post savePost(AddPostRequest addPostRequest, Category category){ return postRepository.save(addPostRequest.toEntity(category));
     }
 
     public List<Post> findAll() {return postRepository.findAll();}
 
-    public Optional<Post> findById(Long postId) {return postRepository.findById(postId);}
+    public Post findById(Long postId) {return postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("not found : " + postId));}
 
     /**
      * 영속성 컨텍스트가 자동 변경

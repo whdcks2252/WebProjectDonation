@@ -11,15 +11,15 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Post extends ObjectTime{
     @Builder
-    public Post(String title, String content,PostStatus postStatus) {
+    public Post(String title, String content,PostStatus postStatus,Category categorie) {
         this.title = title;
         this.content = content;
         this.postStatus = postStatus;
+        this.categorie=categorie;
     }
     @Id
     @GeneratedValue
@@ -46,7 +46,7 @@ public class Post extends ObjectTime{
     private Category categorie;
 
 
-    //업데이트 null검증
+    //업데이트 null검증 상태만 null 가능 검증
     public   void updateValidate(UpdatePostRequest updatePostRequest) {
         if(ObjectUtils.isEmpty(updatePostRequest))
             throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");

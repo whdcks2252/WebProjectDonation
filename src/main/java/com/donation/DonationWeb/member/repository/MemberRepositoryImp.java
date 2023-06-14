@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,26 +23,24 @@ public class MemberRepositoryImp implements MemberRepository {
 
     @Override
     public void update(Long memberId, MemberUpdateDto updateParam) {
-
+        Member member = findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));
+        member.updateValidate(updateParam);
     }
 
     @Override
-    public Member findById(Long id) {
-        return null;
+    public Optional<Member> findById(Long memberId) {
+        return Optional.ofNullable(em.find(Member.class, memberId));
     }
 
-    //맴버 불러오기
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
-
+    @Override
     public List<Member> findAll() {
-        return em.createQuery("select p from Member p",Member.class).getResultList();
+        return em.createQuery("select m from Member m",Member.class).getResultList();
     }
 
     @Override
-    public void delete(long id) {
-
+    public void delete(Long memberId) {
+        Member member = findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));
+        em.remove(member);
     }
 
 }

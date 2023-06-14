@@ -37,8 +37,8 @@ public class TestDataInit {
         categoryServiceImp.saveCategory(new AddCategoryRequest("노인"));
         categoryServiceImp.updateCategory(category.getId(),UpdateCategoryRequest.builder().name("동물 수정").build());
 
-      Post post=  postRepository.savePost(new AddPostRequest("title1","gdgdg"));
-         postRepository.savePost(new AddPostRequest("title2","gdgdggd"));
+      Post post=  postRepository.savePost(new AddPostRequest("title1","gdgdg"),category);
+         postRepository.savePost(new AddPostRequest("title2","gdgdggd"),category);
         postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("test").content("test").postStatus(PostStatus.EXPIRATION).build());
         postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("gd").postStatus(PostStatus.EXPIRATION).build());
 
