@@ -4,6 +4,7 @@ import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.ServiceAgreement;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
+import com.donation.DonationWeb.member.repository.MemberRepository;
 import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImp implements MemberService{
 
-    private final MemberRepositoryImp memberRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     @Override
