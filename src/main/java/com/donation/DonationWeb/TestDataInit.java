@@ -37,13 +37,13 @@ public class TestDataInit {
 
         Member save = memberServiceImp.save(new AddMemberRequest
                 ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444", "sadasdasdas",
-                        "seoul","boroad","123"), ServiceAgreement.YES);
+                        "seoul","boroad","123",ServiceAgreement.YES));
         Member save2 = memberServiceImp.save(new AddMemberRequest
                 ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬",
-                        "01044444444", "sadasdasdas","seoul","boroad","123"), ServiceAgreement.YES);
+                        "01044444444", "sadasdasdas","seoul","boroad","123",ServiceAgreement.YES));
         Member save3 = memberServiceImp.save(new AddMemberRequest
                 ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444",
-                        "sadasdasdas","seoul","boroad","123"), ServiceAgreement.YES);
+                        "sadasdasdas","seoul","boroad","123",ServiceAgreement.YES));
         memberServiceImp.findById(save.getId());
         memberServiceImp.update(save.getId(),new MemberUpdateDto("닉네임변경","123123","asgasgd","change","change","change"));
         memberServiceImp.delete(save2.getId());

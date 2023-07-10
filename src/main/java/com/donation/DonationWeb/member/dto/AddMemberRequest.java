@@ -4,18 +4,20 @@ import com.donation.DonationWeb.domain.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
 public class AddMemberRequest {
 
-
+    @NotBlank
     private String memberId;
     //멤버 닉네임
+
     private String memberNickname;
 
     private String password;
+
     //멤버 이름
     private String memberName;
     //멤버 전화번호
@@ -30,7 +32,7 @@ public class AddMemberRequest {
     private String zipcode;
 
     public AddMemberRequest(String memberId, String memberNickname, String password,
-                            String memberName, String memberPhone, String email, String city,String street,String zipcode) {
+                            String memberName, String memberPhone, String email, String city,String street,String zipcode,ServiceAgreement serviceAgreement) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.password = password;
@@ -40,9 +42,10 @@ public class AddMemberRequest {
         this.city = city;
         this.street = street;
         this.zipcode = zipcode;
+        this.serviceAgreement = serviceAgreement;
     }
 
-    public Member toEntity(ServiceAgreement serviceAgreement) {
+    public Member toEntity( ) {
         return Member.builder()
                 .memberId(this.memberId).memberNickname(this.memberNickname)
                 .password(this.password).memberName(this.memberName).memberPhone(this.memberPhone)

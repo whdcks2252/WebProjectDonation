@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    Member save(AddMemberRequest addMemberRequest, ServiceAgreement svc);
+    Member save(AddMemberRequest addMemberRequest);
 
     public void update(Long memberId, MemberUpdateDto updateParam);
     public void delete(Long memberId);

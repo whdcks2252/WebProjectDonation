@@ -22,8 +22,8 @@ public class MemberServiceImp implements MemberService{
 
     @Transactional
     @Override
-    public Member save(AddMemberRequest addMemberRequest, ServiceAgreement sva){
-        return memberRepository.save(addMemberRequest.toEntity(sva));
+    public Member save(AddMemberRequest addMemberRequest){
+        return memberRepository.save(addMemberRequest.toEntity());
     }
 
     /**
