@@ -4,13 +4,11 @@ import com.donation.DonationWeb.domain.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
 public class AddMemberRequest {
 
-    @NotBlank
     private String memberId;
     //멤버 닉네임
 
