@@ -3,6 +3,7 @@ package com.donation.DonationWeb.member.repository;
 
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface MemberRepository  {
 
     List<Member> findAll();
 
-    public void delete(Long memberId);
+     void delete(Long memberId);
+
+    Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);
 
 }

@@ -4,6 +4,9 @@ import com.donation.DonationWeb.domain.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 
 @Getter
 @NoArgsConstructor
@@ -11,15 +14,19 @@ public class AddMemberRequest {
 
     private String memberId;
     //멤버 닉네임
-
+    @NotBlank
     private String memberNickname;
-
+    @NotBlank
     private String password;
-
+    @NotBlank
     //멤버 이름
     private String memberName;
+    @NotBlank
     //멤버 전화번호
     private String memberPhone;
+
+    @NotBlank
+    @Email
     //멤버 이메일
     private String email;
     //이용 약관

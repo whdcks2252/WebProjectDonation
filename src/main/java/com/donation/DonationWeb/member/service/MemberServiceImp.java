@@ -2,6 +2,7 @@ package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.repository.MemberRepository;
@@ -47,6 +48,16 @@ public class MemberServiceImp implements MemberService{
     @Override
     public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));}
 
+    @Override
+    public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest) {
+        Optional<Member> memberIDAndPassword = memberRepository.findMemberIDAndPassword(loginMemberRequest);
 
+        if (!memberIDAndPassword.isPresent()) {
+            return Optional.empty();
+        }
+
+
+        return memberIDAndPassword;
+    }
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberUpdateDto {
+
     private String memberNickname;
     private String memberPhone;
     private String email;

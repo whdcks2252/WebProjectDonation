@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.member.repository;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -42,5 +43,15 @@ public class MemberRepositoryImp implements MemberRepository {
         Member member = findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));
         em.remove(member);
     }
+
+    @Override
+    public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest){
+
+        return em.createQuery("select m from Member m where m.memberId = : loginId and m.password =:password")
+                .setParameter("loginId", loginMemberRequest.getLoginId()).setParameter("password",loginMemberRequest.getPassWord())
+                .getResultList().stream().findAny();
+    }
+
+
 
 }

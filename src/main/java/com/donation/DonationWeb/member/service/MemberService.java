@@ -2,6 +2,7 @@ package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 
@@ -17,4 +18,7 @@ public interface MemberService {
 
     Member findById(Long memberId);
     List<Member> findAll();
+
+    Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);
+
 }
