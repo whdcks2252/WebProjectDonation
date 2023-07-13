@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-    public Post savePost(AddPostRequest addPostRequest, Category category);
+    public Post savePost(AddPostRequest addPostRequest,Long id);
 
     public List<Post> findAll();
 

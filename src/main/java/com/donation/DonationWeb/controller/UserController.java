@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.controller;
 
 
+import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.login.dto.LoginResponse;
 import com.donation.DonationWeb.login.service.LoginService;
@@ -64,7 +65,9 @@ public class UserController {
         Optional<Member> memberIDAndPassword = memberService.findMemberIDAndPassword(loginMemberRequest);
 
         if(memberIDAndPassword.isPresent()) {
+            log.info("{}",memberIDAndPassword.get().getId());
             loginService.loginUser(memberIDAndPassword.get().getId());
+
             return ResponseEntity.status(HttpStatus.OK).body(LoginResponse.createInstance(memberIDAndPassword.orElseThrow(() -> new Exception()),RESPONSE_OK));
         }
 
@@ -83,13 +86,10 @@ public class UserController {
 
     }
 
+    @GetMapping
+    public void test (@Login Long id) {
+        log.info("{}",id);
 
-    @GetMapping("/test")
-    public Object test2(@SessionAttribute(name= SessionConst.LOGIN_MEMBER,required = false)Long id) {
-
-        Member byId = memberService.findById(id);
-        //  loginService.logoutUser();
-        return byId;
     }
 
 }

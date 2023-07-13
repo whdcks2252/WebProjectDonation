@@ -15,11 +15,12 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 public class Post extends ObjectTime{
     @Builder
-    public Post(String title, String content,PostStatus postStatus,Category categorie) {
+    public Post(String title, String content,PostStatus postStatus,Category categorie,Member member) {
         this.title = title;
         this.content = content;
         this.postStatus = postStatus;
         this.categorie=categorie;
+        this.member = member;
     }
     @Id
     @GeneratedValue

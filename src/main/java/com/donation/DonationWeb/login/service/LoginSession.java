@@ -36,7 +36,9 @@ public class LoginSession implements LoginService {
         log.info("session={}",httpSession.getId());
 
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER,id);
-        log.info("session={}",httpSession.getMaxInactiveInterval());
+
+        //httpSession.setMaxInactiveInterval(10); 세션시간
+        log.info("session getMaxInactiveInterval ={}",httpSession.getMaxInactiveInterval());
         log.info("creationTime={}", new Date(httpSession.getCreationTime()));
         log.info("isNew{}",httpSession.isNew());
 
@@ -45,6 +47,7 @@ public class LoginSession implements LoginService {
     @Override
     public void logoutUser() {
          httpSession.removeAttribute(SessionConst.LOGIN_MEMBER);
+
         log.info("session={}",httpSession.getId());
         log.info("session={}",httpSession.getMaxInactiveInterval());
         log.info("creationTime={}", new Date(httpSession.getCreationTime()));
