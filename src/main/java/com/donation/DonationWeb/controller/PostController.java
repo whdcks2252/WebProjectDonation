@@ -1,13 +1,10 @@
 package com.donation.DonationWeb.controller;
 
 import com.donation.DonationWeb.argumentresolver.Login;
-import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.post.dto.AddPostRequest;
 import com.donation.DonationWeb.post.service.PostService;
-import com.donation.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

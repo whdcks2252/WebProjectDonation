@@ -1,8 +1,11 @@
 package com.donation.DonationWeb.member.repository;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
+import com.donation.DonationWeb.member.dto.IdCheckRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
+import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +27,7 @@ public class MemberRepositoryImp implements MemberRepository {
 
     @Override
     public void update(Long memberId, MemberUpdateDto updateParam) {
-        Member member = findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));
+        Member member = findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));
         member.updateValidate(updateParam);
     }
 
@@ -40,7 +43,7 @@ public class MemberRepositoryImp implements MemberRepository {
 
     @Override
     public void delete(Long memberId) {
-        Member member = findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));
+        Member member = findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));
         em.remove(member);
     }
 
@@ -52,6 +55,13 @@ public class MemberRepositoryImp implements MemberRepository {
                 .getResultList().stream().findAny();
     }
 
+    @Override
+    public  Optional<Member> idCheck(String id) {
+      return  em.createQuery("select m from Member m where m.memberId= :id").setParameter("id",id).getResultList().stream().findAny();
+    }
 
-
+    @Override
+    public  Optional<Member> nickNameCheck(String nickName) {
+        return  em.createQuery("select m  from Member m where m.memberNickname= :nickName").setParameter("nickName",nickName).getResultList().stream().findAny();
+    }
 }

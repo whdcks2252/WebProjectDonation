@@ -1,7 +1,7 @@
 package com.donation.DonationWeb.login.service;
 
 
-import com.donation.session.SessionConst;
+import com.donation.DonationWeb.login.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

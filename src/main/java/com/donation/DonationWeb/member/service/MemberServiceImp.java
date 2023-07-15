@@ -2,9 +2,12 @@ package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
+import com.donation.DonationWeb.member.dto.IdCheckRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
+import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import com.donation.DonationWeb.member.repository.MemberRepository;
 import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +49,7 @@ public class MemberServiceImp implements MemberService{
     public List<Member> findAll() {return memberRepository.findAll();}
 
     @Override
-    public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("not found : " + memberId));}
+    public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));}
 
     @Override
     public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest) {
@@ -60,4 +63,26 @@ public class MemberServiceImp implements MemberService{
         return memberIDAndPassword;
     }
 
+    @Override
+    public String idCheck(IdCheckRequest id) {
+        Optional<Member> idCheck = memberRepository.idCheck(id.getId());
+        if (idCheck.isPresent())
+        {
+            return "존재하는 아이디 입니다.";
+        }
+        else {
+            return "사용가능한 아이디 입니다.";
+        }
+    }
+    @Override
+    public String nickNameCheck(NicknameCheckRequest nickName) {
+        Optional<Member> nickNameCheck = memberRepository.nickNameCheck(nickName.getNickName());
+        if (nickNameCheck.isPresent())
+        {
+            return "존재하는 닉네임 입니다.";
+        }
+        else {
+            return "사용가능한 닉네임 입니다.";
+        }
+    }
 }

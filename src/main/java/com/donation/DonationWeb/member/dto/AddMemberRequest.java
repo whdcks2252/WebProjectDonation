@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor
 public class AddMemberRequest {
-
+    @NotBlank
     private String memberId;
     //멤버 닉네임
     @NotBlank
