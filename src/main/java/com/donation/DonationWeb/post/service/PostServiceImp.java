@@ -64,9 +64,9 @@ public class PostServiceImp implements PostService {
         if (postMemberValidation(upPost.getPostId(), loginId)) {
             if(categoryChange(upPost.getCategoryNum())){
                 Category findCategory = categoryService.findById(upPost.getCategoryNum());
-                postRepository.updateCategoryExists(upPost,findCategory);
-            }
-            postRepository.update(upPost);
+                postRepository.update(upPost,findCategory);
+            }else
+                postRepository.update(upPost,null);
         }
         else {
             throw new PostException("업데이트가 실패 하였습니다");

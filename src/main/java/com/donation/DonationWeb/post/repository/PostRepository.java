@@ -12,8 +12,7 @@ public interface PostRepository {
 
     Post save(Post post);
 
-    void update(UpdatePostRequest updateParam);
-    void updateCategoryExists(UpdatePostRequest updateParam,Category category);
+    void update(UpdatePostRequest updateParam,Category category);
 
 
     void delete(Long postId);

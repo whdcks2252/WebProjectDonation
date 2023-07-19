@@ -56,23 +56,7 @@ public class Post extends ObjectTime{
     private Member member;
 
     //업데이트 null검증 상태만 null 가능 검증
-    public   void updateValidate(UpdatePostRequest updatePostRequest) {
-        if(ObjectUtils.isEmpty(updatePostRequest))
-            throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
-        if (updatePostRequest.getTitle() != null) {
-            this.title = updatePostRequest.getTitle();
 
-        }
-        if (updatePostRequest.getContent() != null) {
-            this.content = updatePostRequest.getContent();
-
-        }
-        if (updatePostRequest.getPostStatus() != null) {
-            this.postStatus = updatePostRequest.getPostStatus();
-
-        }
-
-    }
     public   void CategoryChangeAndUpdateValidate(UpdatePostRequest updatePostRequest,Category categorie) {
         if(ObjectUtils.isEmpty(updatePostRequest))
             throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
