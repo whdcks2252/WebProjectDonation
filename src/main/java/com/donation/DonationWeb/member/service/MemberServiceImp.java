@@ -52,6 +52,12 @@ public class MemberServiceImp implements MemberService{
     public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));}
 
     @Override
+    public Member findByMemberId(String memberName) {
+       return memberRepository.findByMemberId(memberName).orElseThrow(()->new UserException("not found:"+memberName));
+
+    }
+
+    @Override
     public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest) {
         Optional<Member> memberIDAndPassword = memberRepository.findMemberIDAndPassword(loginMemberRequest);
 

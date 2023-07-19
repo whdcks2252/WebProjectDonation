@@ -44,4 +44,11 @@ public class CategoryRepositoryImp implements CategoryRepository {
     public List<Category> findAll() {
         return em.createQuery("select c from Category c",Category.class).getResultList();
     }
+
+    @Override
+    public Optional<Category> findByName(String categoryName) {
+        return em.createQuery("select c from Category c where c.CategoryName= :Category_name").
+                setParameter("Category_name", categoryName).getResultStream().findAny();
+
+    }
 }

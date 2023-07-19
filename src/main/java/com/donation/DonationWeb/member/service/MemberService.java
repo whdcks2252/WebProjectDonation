@@ -19,6 +19,7 @@ public interface MemberService {
     public void delete(Long memberId);
 
     Member findById(Long memberId);
+    Member findByMemberId(String memberName);
     List<Member> findAll();
 
     Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);

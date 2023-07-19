@@ -1,8 +1,11 @@
 package com.donation.DonationWeb.post.repository;
 
+import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
+import com.donation.DonationWeb.exception.PostException;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class PostRepositoryImp implements PostRepository {
 
     private final EntityManager em;
@@ -26,16 +30,11 @@ public class PostRepositoryImp implements PostRepository {
     //게시물 업데이트
     @Override
     public void update(Long postId, UpdatePostRequest updateParam) {
-        Post findPost = findById(postId).orElseThrow(() -> new IllegalArgumentException("not found : " + postId));
+        Post findPost = findById(postId).orElseThrow(() -> new PostException("not found postId : " + postId));
         findPost.updateValidate(updateParam);
     }
 
-    @Override
-    public void delete(Long postId) {
-        System.out.println(findById(postId).orElseThrow().getId());
-        em.remove(findById(postId).orElseThrow(() ->
-                new IllegalArgumentException("not found : " + postId)));
-    }
+
 
     @Override
     //게시물 불러오기
@@ -43,9 +42,37 @@ public class PostRepositoryImp implements PostRepository {
         Post post = em.find(Post.class, postId);
         return Optional.ofNullable(post);
     }
+
+    @Override
+    public List<Post> findByMemberId(String memberId) {
+    return    em.createQuery("select p from Post p where p.member.memberId=:memberid")
+            .setParameter("memberid", memberId).getResultList();
+
+    }
+
+    @Override
+    public List<Post> findByPage(Integer page) {
+       return em.createQuery("select p from Post p order by p.createTime DESC ",Post.class).setFirstResult(page*10).setMaxResults(10).getResultList();
+    }
+
+    @Override
+    public List<Post> findByCategry(Long categoryId, Integer page) {
+        log.info("Page={}",page);
+        return em.createQuery("select p from Post p where p.categorie.id=:category_id order by p.createTime DESC ",Post.class)
+                        .setParameter("category_id",categoryId).setFirstResult(page*10).setMaxResults(10).getResultList();
+
+    }
+
     @Override
     public List<Post> findAll() {
         return em.createQuery("select p from Post p",Post.class).getResultList();
     }
 
+
+    @Override
+    public void delete(Long postId) {
+
+        em.remove(findById(postId).orElseThrow(() ->
+                new PostException("not found postId : " + postId)));
+    }
 }

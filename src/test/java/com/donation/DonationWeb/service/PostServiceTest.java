@@ -36,16 +36,12 @@ public class PostServiceTest {
     @Test
     public void 게시물등록() throws Exception {
 
-    /*    //given
-       Post post = new Post("gd","dgd");
+       //given
 
         //when
-        Post savedPost = postRepository.save(post);
 
         //then
-        Post findPost = postRepository.findById(post.getId()).get();
-        assertThat(findPost).isEqualTo(savedPost);
-*/
+
 
 
     }

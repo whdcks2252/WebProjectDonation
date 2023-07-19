@@ -29,7 +29,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             Map<String, String> errorResult = new HashMap<>();
             errorResult.put("message", "미인증 사용자 요청");
             String result = objectMapper.writeValueAsString(errorResult);
-
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             response.getWriter().write(result);

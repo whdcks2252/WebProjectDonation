@@ -9,10 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 public class AddCategoryRequest {
 
-    private String name;
+    private String categoryName;
 
     public Category toEntity() {
-            return Category.builder().name(this.name).build();
+            return Category.builder().CategoryName(this.categoryName).build();
     }
 
 }

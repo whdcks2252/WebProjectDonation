@@ -3,6 +3,7 @@ package com.donation.DonationWeb.controller;
 
 import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.exception.LoginException;
 import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginResponse;
 import com.donation.DonationWeb.login.service.LoginService;
@@ -35,29 +36,20 @@ public class UserController {
     @PostMapping("/join")
     public Object joinUser(@RequestBody @Validated AddMemberRequest addMemberRequest) {
 
-
-        Member save = memberService.save(addMemberRequest);
-
-        return AddMemberResponse.createInstance(save);
+        return new ResponseEntity<>(AddMemberResponse.
+                createInstance(memberService.save(addMemberRequest)),HttpStatus.CREATED);
     }
 
     @GetMapping ("/{id}")
     public Object findByIdUser(@PathVariable @NotBlank Long id) {
 
-
-        log.info("{}", id);
-
-        Member findById = memberService.findById(id);
-
-        return AddMemberResponse.createInstance(findById);
+        return AddMemberResponse.
+                createInstance(memberService.findById(id));
     }
 
     @PostMapping("/login")
-    public Object login(@RequestBody @Validated LoginMemberRequest loginMemberRequest,BindingResult bindingResult) throws Exception {
+    public Object login(@RequestBody @Validated LoginMemberRequest loginMemberRequest ) throws Exception {
 
-        if (bindingResult.hasErrors()) {
-            return bindingResult;
-        }
 
         Optional<Member> memberIDAndPassword = memberService.findMemberIDAndPassword(loginMemberRequest);
 
@@ -65,12 +57,11 @@ public class UserController {
             log.info("{}",memberIDAndPassword.get().getId());
             loginService.loginUser(memberIDAndPassword.get().getId());
 
-            return ResponseEntity.status(HttpStatus.OK).body(LoginResponse.createInstance(memberIDAndPassword.orElseThrow(() -> new UserException()),RESPONSE_OK));
+            return ResponseEntity.status(HttpStatus.OK).body(LoginResponse.createInstance(memberIDAndPassword.orElseThrow(() -> new LoginException()),RESPONSE_OK));
         }
 
         else {
-            bindingResult.reject("loginFail","아이디 또는 비밀번호가 맞지 않습니다");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(loginMemberRequest);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginMemberRequest);
         }
 
 

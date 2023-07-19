@@ -13,8 +13,10 @@ public interface CategoryRepository {
     void update(Long categoryId, UpdateCategoryRequest updateCategoryRequest);
 
     void delete(Long categoryId);
+
     Optional<Category> findById(Long categoryId);
 
     List<Category> findAll();
 
+    public Optional<Category> findByName(String categoryName);
 }

@@ -13,6 +13,8 @@ public interface CategoryService {
     public List<Category> findAll();
 
     public Category findById(Long categoryId);
+    public Category findByName(String categoryName);
+
 
     public void updateCategory(Long categoryId, UpdateCategoryRequest upCategory) ;
 

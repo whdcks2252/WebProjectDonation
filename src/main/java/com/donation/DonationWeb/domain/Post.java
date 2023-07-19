@@ -2,6 +2,7 @@ package com.donation.DonationWeb.domain;
 
 
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,11 +29,11 @@ public class Post extends ObjectTime{
     private Long id;
 
     //제목
-    @Column(length = 500,nullable = false)
+    @Column(length = 500)
     private String title;
 
     //텍스트
-    @Column(name="post_content", nullable = false)
+    @Column(name="post_content")
     @Lob
     private String content;
 
@@ -44,11 +45,13 @@ public class Post extends ObjectTime{
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore//FetchType.LAZY 로 인한 Json 오류
     private Category categorie;
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id",nullable = false)
+    @JsonIgnore//FetchType.LAZY 로 인한 Json 오류
     private Member member;
 
     //업데이트 null검증 상태만 null 가능 검증

@@ -37,6 +37,12 @@ public class CategoryServiceImp implements CategoryService {
         return categoryRepository.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("not found : " + categoryId));
     }
 
+    @Override
+    public Category findByName(String categoryName) {
+            return categoryRepository.findByName(categoryName).orElseThrow(()->new IllegalArgumentException("not found : " + categoryName));
+
+    }
+
     /**
      * 영속성 컨텍스트가 자동 변경
      */

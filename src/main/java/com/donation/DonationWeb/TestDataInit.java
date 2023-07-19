@@ -54,15 +54,30 @@ public class TestDataInit {
         }
 
         Category category=  categoryServiceImp.saveCategory(new AddCategoryRequest("동물"));
-        categoryServiceImp.saveCategory(new AddCategoryRequest("노인"));
+        Category category1 = categoryServiceImp.saveCategory(new AddCategoryRequest("senior"));
         categoryServiceImp.updateCategory(category.getId(),UpdateCategoryRequest.builder().name("동물 수정").build());
 
-      Post post=  postRepository.savePost(new AddPostRequest("title1","gdgdg", category.getId()), save.getId());
-        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getId()),save3.getId());
-       postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("test").content("test").postStatus(PostStatus.EXPIRATION).build());
+      Post post=  postRepository.savePost(new AddPostRequest("title1","gdgdg", category.getCategoryName()), save.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category1.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+        postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+
+
+
+        postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("test").content("test").postStatus(PostStatus.EXPIRATION).build());
         postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("gd").postStatus(PostStatus.EXPIRATION).build());
 
-        postRepository.delete(post.getId());
     }
 
 }

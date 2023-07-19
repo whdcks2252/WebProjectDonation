@@ -37,6 +37,11 @@ public class MemberRepositoryImp implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByMemberId(String memberName) {
+       return em.createQuery("select m from Member m where m.memberId=:member_id").setParameter("member_id", memberName).getResultStream().findAny();
+    }
+
+    @Override
     public List<Member> findAll() {
         return em.createQuery("select m from Member m",Member.class).getResultList();
     }
@@ -52,7 +57,7 @@ public class MemberRepositoryImp implements MemberRepository {
 
         return em.createQuery("select m from Member m where m.memberId = : loginId and m.password =:password")
                 .setParameter("loginId", loginMemberRequest.getLoginId()).setParameter("password",loginMemberRequest.getPassWord())
-                .getResultList().stream().findAny();
+                .getResultList().stream().findAny(); //null일수도 있으므로
     }
 
     @Override

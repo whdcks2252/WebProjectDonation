@@ -1,6 +1,8 @@
 package com.donation.DonationWeb.post.repository;
 
+import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
+import com.donation.DonationWeb.post.dto.PostResponse;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 
 import java.util.List;
@@ -13,7 +15,11 @@ public interface PostRepository {
     void update(Long postId, UpdatePostRequest updateParam);
 
     void delete(Long postId);
+
     Optional<Post> findById(Long postId);
+    List<Post> findByMemberId(String memberId);
+    List<Post> findByPage(Integer page);
+    List<Post> findByCategry(Long categoryId,Integer page);
 
     List<Post> findAll();
 

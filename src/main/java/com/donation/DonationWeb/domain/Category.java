@@ -18,11 +18,11 @@ public class Category extends ObjectTime {
     @Id @GeneratedValue
     @Column(name= "category_id")
     private Long id;
-
-    private String name;
+    @Column(name= "category_name")
+    private String CategoryName;
     @Builder
-    public Category(String name) {
-        this.name = name;
+    public Category(String CategoryName) {
+        this.CategoryName = CategoryName;
     }
 
 
@@ -31,7 +31,7 @@ public class Category extends ObjectTime {
         if(ObjectUtils.isEmpty(updateCategoryRequest))
             throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
         if (updateCategoryRequest != null) {
-            this.name = updateCategoryRequest.getName();
+            this.CategoryName = updateCategoryRequest.getName();
         }
 
     }
