@@ -18,9 +18,9 @@ public interface PostService {
     public Post findById(Long postId);
     public List<Post> findByPage(Integer page);
 
-    List<Post> findByCategry(String categoryName,Integer page);
+    public List<Post> findByCategry(String categoryName,Integer page);
 
-    public void updatePost(Long postId, UpdatePostRequest upPost) ;
+    public void updatePost( UpdatePostRequest upPost,Long loginId) ;
 
     public void delete(DeletePostRequest deletePostRequest,Long LoginId);
 }

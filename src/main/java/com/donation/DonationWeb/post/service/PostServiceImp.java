@@ -55,33 +55,53 @@ public class PostServiceImp implements PostService {
 
             }
 
-
+    @Override
+    @Transactional
     /**
      * 영속성 컨텍스트가 자동 변경
      */
-    @Transactional
-    public void updatePost(Long postId, UpdatePostRequest upPost) {
-        postRepository.update(postId,upPost);
-
-
+    public void updatePost(UpdatePostRequest upPost, Long loginId) {
+        if (postMemberValidation(upPost.getPostId(), loginId)) {
+            if(categoryChange(upPost.getCategoryNum())){
+                Category findCategory = categoryService.findById(upPost.getCategoryNum());
+                postRepository.updateCategoryExists(upPost,findCategory);
+            }
+            postRepository.update(upPost);
+        }
+        else {
+            throw new PostException("업데이트가 실패 하였습니다");
+        }
     }
+
+
+
     @Transactional
     @Override
     public void delete(DeletePostRequest deletePostRequest,Long loginId) {
 
-        if(deleteValidation(deletePostRequest.getPostId(),loginId) ){//멤버 아이디랑 게시물을 검증한다
+        if(postMemberValidation(deletePostRequest.getPostId(),loginId) ){//멤버 아이디랑 게시물을 검증한다
+
             postRepository.delete(deletePostRequest.getPostId());
-        }else {
+
+        }else
+        {
           throw   new PostException("게시물 삭제가 실패 햐엿습니다");
         }
 
     }
 
-    private boolean deleteValidation(Long deleteId,Long loginId) {
-        Post postById = findById(deleteId);
+    private boolean postMemberValidation(Long postId,Long loginId) {//로그인된 멤버 아이디랑 게시물을 검증한다
+        Post postById = findById(postId);
         Member findByLoginId = memberService.findById(loginId);
 
-        if(findByLoginId.getId()==postById.getMember().getId() ){//멤버 아이디랑 게시물을 검증한다
+        if(findByLoginId.getId()==postById.getMember().getId() ){
+            return true;
+        }
+
+        return false;
+    }
+    private boolean categoryChange(Long categoryId) {//카테고리 변경
+        if (categoryId!=null){
             return true;
         }
 

@@ -7,5 +7,5 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class IdCheckRequest {
     @NotBlank
-    String id;
+    String memberId;
 }

@@ -12,7 +12,7 @@ public class IdCheckResponse {
 
 
     public static IdCheckResponse createInstance(IdCheckRequest id, String massage) {
-        return new IdCheckResponse(id.getId(),massage
+        return new IdCheckResponse(id.getMemberId(), massage
 
         );
     }

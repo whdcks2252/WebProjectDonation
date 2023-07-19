@@ -4,6 +4,7 @@ package com.donation.DonationWeb.domain;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
@@ -45,13 +46,13 @@ public class Post extends ObjectTime{
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    @JsonIgnore//FetchType.LAZY 로 인한 Json 오류
+    //@JsonIgnore//FetchType.LAZY 로 인한 Json 오류 반환을 할때 무시를함
     private Category categorie;
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id",nullable = false)
-    @JsonIgnore//FetchType.LAZY 로 인한 Json 오류
+    //@JsonIgnore//FetchType.LAZY 로 인한 Json 오류 반환을 할때 무시를함
     private Member member;
 
     //업데이트 null검증 상태만 null 가능 검증
@@ -60,13 +61,39 @@ public class Post extends ObjectTime{
             throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
         if (updatePostRequest.getTitle() != null) {
             this.title = updatePostRequest.getTitle();
+
         }
         if (updatePostRequest.getContent() != null) {
             this.content = updatePostRequest.getContent();
+
         }
         if (updatePostRequest.getPostStatus() != null) {
             this.postStatus = updatePostRequest.getPostStatus();
+
         }
+
     }
+    public   void CategoryChangeAndUpdateValidate(UpdatePostRequest updatePostRequest,Category categorie) {
+        if(ObjectUtils.isEmpty(updatePostRequest))
+            throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
+        if (updatePostRequest.getTitle() != null) {
+            this.title = updatePostRequest.getTitle();
+
+        }
+        if (updatePostRequest.getContent() != null) {
+            this.content = updatePostRequest.getContent();
+
+        }
+        if (updatePostRequest.getPostStatus() != null) {
+            this.postStatus = updatePostRequest.getPostStatus();
+
+        }
+        if (categorie != null) {
+            this.categorie = categorie;
+
+        }
+
+    }
+
 
 }

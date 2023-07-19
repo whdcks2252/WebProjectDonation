@@ -70,13 +70,13 @@ public class UserController {
     @GetMapping ("/logout")
     public Object logout( ) {
         loginService.logoutUser();
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
 
     }
 
     @PostMapping("/idCheck")
-    public Object idCheck(@RequestBody @Validated IdCheckRequest id) {
-        return IdCheckResponse.createInstance(id,memberService.idCheck(id));
+    public Object idCheck(@RequestBody @Validated IdCheckRequest memberId) {
+        return IdCheckResponse.createInstance(memberId,memberService.idCheck(memberId));
 
 
     }

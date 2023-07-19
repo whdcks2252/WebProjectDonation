@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder// 테스트 용
+@Builder
 public class UpdatePostRequest {
+    private Long postId;
     private String title;
     private String content;
-    private PostStatus postStatus;
+    private Long categoryNum;
+    private PostStatus postStatus;// 생성시 진행중
+
+
 }

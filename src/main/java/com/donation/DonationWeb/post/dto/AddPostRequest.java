@@ -8,14 +8,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 public class AddPostRequest {
-
+    @NotBlank
     private String title;
+    @NotBlank
     private String content;
+    @NotBlank
     private String categoryName;
     private PostStatus postStatus=PostStatus.PROCESS;// 생성시 진행중
 

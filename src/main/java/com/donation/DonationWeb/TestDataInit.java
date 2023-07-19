@@ -75,8 +75,7 @@ public class TestDataInit {
 
 
 
-        postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("test").content("test").postStatus(PostStatus.EXPIRATION).build());
-        postRepository.updatePost(post.getId(),UpdatePostRequest.builder().title("gd").postStatus(PostStatus.EXPIRATION).build());
+
 
     }
 

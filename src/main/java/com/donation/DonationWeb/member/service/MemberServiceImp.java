@@ -71,7 +71,7 @@ public class MemberServiceImp implements MemberService{
 
     @Override
     public String idCheck(IdCheckRequest id) {
-        Optional<Member> idCheck = memberRepository.idCheck(id.getId());
+        Optional<Member> idCheck = memberRepository.idCheck(id.getMemberId());
         if (idCheck.isPresent())
         {
             return "존재하는 아이디 입니다.";

@@ -29,13 +29,18 @@ public class PostRepositoryImp implements PostRepository {
 
     //게시물 업데이트
     @Override
-    public void update(Long postId, UpdatePostRequest updateParam) {
-        Post findPost = findById(postId).orElseThrow(() -> new PostException("not found postId : " + postId));
+    public void update(UpdatePostRequest updateParam) {
+       Post findPost = findById(updateParam.getPostId()).orElseThrow(() -> new PostException("not found postId : " + updateParam.getPostId()));
         findPost.updateValidate(updateParam);
+
     }
 
+    @Override
+    public void updateCategoryExists(UpdatePostRequest updateParam,Category category) {
+        Post findPost = findById(updateParam.getPostId()).orElseThrow(() -> new PostException("not found postId : " + updateParam.getPostId()));
+        findPost.CategoryChangeAndUpdateValidate(updateParam,category);
 
-
+    }
     @Override
     //게시물 불러오기
     public Optional<Post> findById(Long postId) {

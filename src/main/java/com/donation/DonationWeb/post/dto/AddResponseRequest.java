@@ -1,17 +1,19 @@
 package com.donation.DonationWeb.post.dto;
 
+import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.PostStatus;
-import com.donation.DonationWeb.domain.ServiceAgreement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-public class PostResponse {
+public class AddResponseRequest {
     private Long PostId;
     private String title;
     private String content;
@@ -25,8 +27,8 @@ public class PostResponse {
 
 
 
-    public static PostResponse createInstance(Post post) {
-        return new PostResponse(post.getId(),post.getTitle(), post.getContent(), post.getCategorie().getCategoryName(),post.getCategorie().getId() ,post.getPostStatus(),
+    public static AddResponseRequest createInstance(Post post) {
+        return new AddResponseRequest(post.getId(), post.getTitle(), post.getContent(), post.getCategorie().getCategoryName(),post.getCategorie().getId(), post.getPostStatus(),
                 post.getMember().getMemberId(), post.getMember().getMemberNickname(), post.getCreateTime(), post.getUpdateTime());
     }
 
