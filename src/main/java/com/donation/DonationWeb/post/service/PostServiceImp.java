@@ -62,7 +62,7 @@ public class PostServiceImp implements PostService {
      */
     public void updatePost(UpdatePostRequest upPost, Long loginId) {
         if (postMemberValidation(upPost.getPostId(), loginId)) {
-            if(categoryChange(upPost.getCategoryNum())){
+            if(categoryExist(upPost.getCategoryNum())){
                 Category findCategory = categoryService.findById(upPost.getCategoryNum());
                 postRepository.update(upPost,findCategory);
             }else
@@ -100,7 +100,7 @@ public class PostServiceImp implements PostService {
 
         return false;
     }
-    private boolean categoryChange(Long categoryId) {//카테고리 변경
+    private boolean categoryExist(Long categoryId) {//카테고리 변경
         if (categoryId!=null){
             return true;
         }

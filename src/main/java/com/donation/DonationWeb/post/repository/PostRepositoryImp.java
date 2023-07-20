@@ -44,27 +44,42 @@ public class PostRepositoryImp implements PostRepository {
 
     @Override
     public List<Post> findByMemberId(String memberId) {
-    return    em.createQuery("select p from Post p where p.member.memberId=:memberid")
+    return    em.createQuery("select p from Post p" +
+                    " join fetch p.member m" +
+                    " join fetch p.categorie c" +
+                    " where p.member.memberId=:memberid")
             .setParameter("memberid", memberId).getResultList();
 
     }
 
     @Override
     public List<Post> findByPage(Integer page) {
-       return em.createQuery("select p from Post p order by p.createTime DESC ",Post.class).setFirstResult(page*10).setMaxResults(10).getResultList();
+       return em.createQuery("select p from Post p" +
+               " join fetch p.member m" +
+               " join fetch p.categorie c" +
+               " order by p.createTime DESC ",
+               Post.class).setFirstResult(page*10).setMaxResults(10).getResultList();
     }
 
     @Override
     public List<Post> findByCategry(Long categoryId, Integer page) {
         log.info("Page={}",page);
-        return em.createQuery("select p from Post p where p.categorie.id=:category_id order by p.createTime DESC ",Post.class)
+        return em.createQuery("select p from Post p" +
+                        " join fetch p.member m" +
+                        " join fetch p.categorie c" +
+                        " where p.categorie.id=:category_id" +
+                        " order by p.createTime DESC "
+                        ,Post.class)
                         .setParameter("category_id",categoryId).setFirstResult(page*10).setMaxResults(10).getResultList();
 
     }
 
     @Override
     public List<Post> findAll() {
-        return em.createQuery("select p from Post p",Post.class).getResultList();
+        return em.createQuery("select p from Post p join" +
+                        " fetch p.member m" +
+                        " join fetch p.categorie c "
+                ,Post.class).getResultList();
     }
 
 
