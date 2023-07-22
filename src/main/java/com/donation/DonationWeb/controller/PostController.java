@@ -6,14 +6,11 @@ import com.donation.DonationWeb.post.dto.*;
 import com.donation.DonationWeb.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,40 +24,40 @@ public class PostController {
     @PostMapping("/create")
     public Object createPost(@RequestBody @Validated AddPostRequest addPostRequest, @Login Long id) {
         log.info("id={}",id);
-        return new ResponseEntity<>(AddResponseRequest.createInstance(postService.savePost(addPostRequest,id)),HttpStatus.CREATED);
+        return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,id)),HttpStatus.CREATED);
 
     }
 
     @GetMapping("/{postId}") //로그인 사용자만 접근가능
-    public Object findById(@PathVariable Long postId) {
+    public Object findByIdLeftJoin(@PathVariable Long postId) {
       return PostResponse.createInstance(postService.findById(postId));
     }
 
     @GetMapping("/list")//조회는 시간순으로 페이징 조회
-    public Object findByIdPage(@RequestParam(defaultValue="0") Integer page) {
+    public Object findByIdPage(@RequestParam(defaultValue="1") Integer page) {
         List<Post> findPosts = postService.findByPage(page);
-        List<PostResponse> collect = findPosts.stream().map((m) -> PostResponse.createInstance(m)).collect(Collectors.toList());
-        return new Result(collect);
+        List<PostListResponse> collect = findPosts.stream().map((m) -> PostListResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
     }
 
     @GetMapping("/list/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
-    public Object findByCategry(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="0") Integer page) {
+    public Object findByCategry(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
         List<Post> findPosts = postService.findByCategry(name, page);
-        List<PostResponse> collect = findPosts.stream().map((m) -> PostResponse.createInstance(m)).collect(Collectors.toList());
-        return new Result(collect);
+        List<PostListResponse> collect = findPosts.stream().map((m) -> PostListResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
 
     }
 
-    @PatchMapping
-    public Object postUpdate(@RequestBody @Validated UpdatePostRequest updatePostRequest, @Login  Long loginId) {
-            postService.updatePost(updatePostRequest,loginId);
-
-        return PostResponse.createInstance(postService.findById(updatePostRequest.getPostId()));
+    @PatchMapping("/{id}")
+    public Object postUpdate(@PathVariable(name = "id") Long postid,@RequestBody @Validated UpdatePostRequest updatePostRequest, @Login  Long loginId) {
+            postService.updatePost(updatePostRequest,postid,loginId);
+        //spring.jpa.open-in-view Lazy 성능 최적화 때문에 findByIdLeftJoin 호출
+        return PostResponse.createInstance(postService.findByIdLeftJoin(postid));
     }
 
-    @DeleteMapping
-    public Object postDelete(@RequestBody @Validated DeletePostRequest deletePostRequest, @Login Long id) {
-            postService.delete(deletePostRequest,id);
+    @DeleteMapping("/{id}")
+    public Object postDelete(@PathVariable(name = "id") Long postId, @Login Long id) {
+            postService.delete(postId,id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

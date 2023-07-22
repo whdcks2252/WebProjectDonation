@@ -53,7 +53,14 @@ public class ArgumentVaildException {
 
         return errormessage;
     }
+    //댓글 예외처리
+    @ExceptionHandler(CommentException.class)
+    public Object Comment(CommentException e){
+        Map<String, Object> errormessage = new HashMap<>();
+        errormessage.put("message", e.getMessage());
 
+        return errormessage;
+    }
 
     //포스트예외처리
     @ExceptionHandler(PostException.class)
@@ -67,6 +74,13 @@ public class ArgumentVaildException {
     //잘못된 요청으로 JSON 파싱이 안될때 오류 처리
     //필수 요청 변수가 없거나 요청 변수 이름이 잘못된 경우
     public Object userException(HttpMessageNotReadableException e){
+        Map<String, Object> errormessage = new HashMap<>();
+        errormessage.put("message","잘못된 요청입니다");
+        return new ResponseEntity<>(errormessage,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NumberFormatException.class)
+    //인터셉터를 스트링으로 처리하기때문에 NumberFormatException 발생함 이를 404오류로 처리
+    public Object userException(NumberFormatException e){
         Map<String, Object> errormessage = new HashMap<>();
         errormessage.put("message","잘못된 요청입니다");
         return new ResponseEntity<>(errormessage,HttpStatus.BAD_REQUEST);

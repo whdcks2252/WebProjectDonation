@@ -1,26 +1,27 @@
 package com.donation.DonationWeb.controller;
 
 
-import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.exception.LoginException;
-import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginResponse;
 import com.donation.DonationWeb.login.service.LoginService;
 import com.donation.DonationWeb.member.dto.*;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.service.MemberService;
+import com.donation.DonationWeb.post.dto.PostListResponse;
+import com.donation.DonationWeb.post.dto.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.donation.DonationWeb.status.statusCode.RESPONSE_OK;
 
@@ -45,6 +46,20 @@ public class UserController {
 
         return AddMemberResponse.
                 createInstance(memberService.findById(id));
+    }
+
+    @GetMapping("/{id}/post") //조회는 시간순으로 페이징 조회 10개씩
+    public Object findUserPost(@PathVariable Long id,@RequestParam(defaultValue="1") Integer page) {
+        Member findPosts = memberService.findUserPosts(id, page);
+
+        return MemberPostResponse.createInstance(findPosts);
+    }
+
+    @GetMapping("/{id}/post/interest") //조회는 시간순으로 페이징 조회 10개씩
+    public Object findUserInterestPosts(@PathVariable Long id,@RequestParam(defaultValue="1") Integer page) {
+        Member findPosts = memberService.findUserInterestPosts(id, page);
+
+        return MemberInterestPostResponse.createInstance(findPosts);
     }
 
     @PostMapping("/login")

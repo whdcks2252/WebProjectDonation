@@ -11,22 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @Slf4j
-public class LoginCheckInterceptor implements HandlerInterceptor {
+public class CheckUserAccessInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
-        log.info("인증 체크 인터셉터 실행 {}", requestURI);
+        log.info("CheckUserAccessInterceptor인터셉터 실행 {}", requestURI);
         log.info("http메서드={}", request.getMethod());
         HttpSession session = request.getSession();
 
+        Long pathId = Long.parseLong(request.getRequestURI().replaceAll("[^0-9]", ""));
+        log.info("test={}", request.getRequestURI().replaceAll("[^0-9]",""));
 
-        if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
+        if ( !session.getAttribute(SessionConst.LOGIN_MEMBER).equals(pathId)) {
             log.info("미인증 사용자 요청");
             Map<String, String> errorResult = new HashMap<>();
             errorResult.put("message", "미인증 사용자 요청");

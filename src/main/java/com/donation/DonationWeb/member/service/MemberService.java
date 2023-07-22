@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.ServiceAgreement;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
@@ -19,7 +20,9 @@ public interface MemberService {
     public void delete(Long memberId);
 
     Member findById(Long memberId);
-    Member findByMemberId(String memberName);
+   Member findUserPosts(Long memberId,Integer page);
+    Member findUserInterestPosts(Long memberId,Integer page);
+
     List<Member> findAll();
 
     Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);

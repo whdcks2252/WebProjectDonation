@@ -1,7 +1,6 @@
 package com.donation.DonationWeb.domain;
 
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
-import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,8 +9,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -53,6 +53,12 @@ public class Member extends ObjectTime {
     //멤버 이메일
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "member")
+    private List<InterestPost> interestPosts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts = new ArrayList<>();
 
     //주소
     @Embedded

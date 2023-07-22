@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.ServiceAgreement;
 import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
@@ -10,6 +11,7 @@ import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import com.donation.DonationWeb.member.repository.MemberRepository;
 import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
+import com.donation.DonationWeb.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +54,13 @@ public class MemberServiceImp implements MemberService{
     public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));}
 
     @Override
-    public Member findByMemberId(String memberName) {
-       return memberRepository.findByMemberId(memberName).orElseThrow(()->new UserException("not found:"+memberName));
+    public Member findUserPosts(Long memberId,Integer page) {
+        return  memberRepository.findUserPosts(memberId,page).orElseThrow(() -> new UserException("등록된 포스트가 없습니다 : " + memberId));
+
+    }
+    @Override
+    public Member findUserInterestPosts(Long memberId,Integer page) {
+        return  memberRepository.findUserInterestPosts(memberId,page).orElseThrow(() -> new UserException("등록된 관심게시물이 없습니다: " + memberId));
 
     }
 

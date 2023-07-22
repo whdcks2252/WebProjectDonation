@@ -28,41 +28,65 @@ public class PostRepositoryImp implements PostRepository {
     }
 
     //게시물 업데이트
-
     @Override
-    public void update(UpdatePostRequest updateParam,Category category) {
-        Post findPost = findById(updateParam.getPostId()).orElseThrow(() -> new PostException("not found postId : " + updateParam.getPostId()));
-        findPost.CategoryChangeAndUpdateValidate(updateParam,category);
+    public void update(UpdatePostRequest updateParam,Post post,Category category) {
+        post.CategoryChangeAndUpdateValidate(updateParam,category);
 
     }
+
     @Override
     //게시물 불러오기
     public Optional<Post> findById(Long postId) {
         Post post = em.find(Post.class, postId);
         return Optional.ofNullable(post);
+
+    }
+
+
+    @Override
+    //null댓글 때문에
+    public Optional<Post> findByIdLeftJoin(Long postId) {
+        return em.createQuery("select p from Post p" +
+                        " join fetch p.member m" +
+                        " join fetch p.categorie c" +
+                        " left join fetch p.commemts co" +
+                        " where p.id=:postId ",Post.class)
+                .setParameter("postId", postId).getResultList().stream().findAny();
+
     }
 
     @Override
-    public List<Post> findByMemberId(String memberId) {
+    public List<Post> findByMemberId(String memberId) { //성능 최적화 fetch조인
     return    em.createQuery("select p from Post p" +
                     " join fetch p.member m" +
                     " join fetch p.categorie c" +
-                    " where p.member.memberId=:memberid")
+                    " where p.member.memberId=:memberid",Post.class)
             .setParameter("memberid", memberId).getResultList();
 
     }
 
+
     @Override
     public List<Post> findByPage(Integer page) {
-       return em.createQuery("select p from Post p" +
-               " join fetch p.member m" +
-               " join fetch p.categorie c" +
-               " order by p.createTime DESC ",
-               Post.class).setFirstResult(page*10).setMaxResults(10).getResultList();
-    }
+        if(page<=0) {
+            page=page+1;
+        }
+            return em.createQuery("select p from Post p" +
+                            " join fetch p.member m" +
+                            " join fetch p.categorie c" +
+                            " order by p.createTime DESC ",
+                    Post.class).setFirstResult((page - 1) * 10)
+                    .setMaxResults(10)
+                    .getResultList();
+
+
+        }
 
     @Override
     public List<Post> findByCategry(Long categoryId, Integer page) {
+        if(page<=0) {
+            page=page+1;
+        }
         log.info("Page={}",page);
         return em.createQuery("select p from Post p" +
                         " join fetch p.member m" +
@@ -70,7 +94,9 @@ public class PostRepositoryImp implements PostRepository {
                         " where p.categorie.id=:category_id" +
                         " order by p.createTime DESC "
                         ,Post.class)
-                        .setParameter("category_id",categoryId).setFirstResult(page*10).setMaxResults(10).getResultList();
+                        .setParameter("category_id",categoryId)
+                        .setFirstResult((page-1)*10)
+                        .setMaxResults(10).getResultList();
 
     }
 
@@ -78,15 +104,14 @@ public class PostRepositoryImp implements PostRepository {
     public List<Post> findAll() {
         return em.createQuery("select p from Post p join" +
                         " fetch p.member m" +
-                        " join fetch p.categorie c "
-                ,Post.class).getResultList();
+                        " join fetch p.categorie c ",Post.class)
+                        .getResultList();
     }
 
 
     @Override
-    public void delete(Long postId) {
+    public void delete(Post post) {
 
-        em.remove(findById(postId).orElseThrow(() ->
-                new PostException("not found postId : " + postId)));
+        em.remove(post);
     }
 }

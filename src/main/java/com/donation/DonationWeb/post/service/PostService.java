@@ -1,6 +1,7 @@
 package com.donation.DonationWeb.post.service;
 
 import com.donation.DonationWeb.domain.Category;
+import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.post.dto.DeletePostRequest;
 import com.donation.DonationWeb.post.dto.PostResponse;
@@ -16,11 +17,14 @@ public interface PostService {
     public List<Post> findAll();
 
     public Post findById(Long postId);
+    public Post findByIdLeftJoin(Long postId);
+
+
     public List<Post> findByPage(Integer page);
 
     public List<Post> findByCategry(String categoryName,Integer page);
 
-    public void updatePost( UpdatePostRequest upPost,Long loginId) ;
+    public void updatePost( UpdatePostRequest upPost,Long postId,Long loginId) ;
 
-    public void delete(DeletePostRequest deletePostRequest,Long LoginId);
+    public void delete(Long postId,Long LoginId);
 }

@@ -3,9 +3,7 @@ package com.donation.DonationWeb.member.repository;
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
-import com.donation.DonationWeb.member.dto.IdCheckRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
-import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -37,13 +35,37 @@ public class MemberRepositoryImp implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findByMemberId(String memberName) {
-       return em.createQuery("select m from Member m where m.memberId=:member_id").setParameter("member_id", memberName).getResultStream().findAny();
+    public Optional<Member> findUserPosts(Long memberId, Integer page) {
+        return em.createQuery("select m from Member m" +
+                        " join fetch m.posts p"+
+                        " join fetch p.categorie c"+
+                        " where p.member.id =: memberId " +
+                        " order by p.createTime DESC " ,Member.class)
+                .setParameter("memberId",memberId)
+                .setFirstResult((page-1)*10).setMaxResults(10)
+                .getResultList().stream().findAny();
+
+
+    }
+    @Override
+    public Optional<Member> findUserInterestPosts(Long memberId, Integer page) {
+        return em.createQuery("select m from Member m" +
+                        " join fetch m.interestPosts ip"+
+                        " join fetch ip.post p"+
+                        " join fetch p.categorie pc"+
+                        " where ip.member.id =: memberId " +
+                        " order by ip.createTime DESC " ,Member.class)
+                .setParameter("memberId",memberId)
+                .setFirstResult((page-1)*10).setMaxResults(10)
+                .getResultList().stream().findAny();
+
+
     }
 
     @Override
     public List<Member> findAll() {
-        return em.createQuery("select m from Member m",Member.class).getResultList();
+        return em.createQuery("select m from Member m",Member.class)
+                .getResultList();
     }
 
     @Override
@@ -55,18 +77,23 @@ public class MemberRepositoryImp implements MemberRepository {
     @Override
     public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest){
 
-        return em.createQuery("select m from Member m where m.memberId = : loginId and m.password =:password")
-                .setParameter("loginId", loginMemberRequest.getLoginId()).setParameter("password",loginMemberRequest.getPassWord())
+        return em.createQuery("select m from Member m where m.memberId = : loginId and m.password =:password",Member.class)
+                .setParameter("loginId", loginMemberRequest.getLoginId())
+                .setParameter("password",loginMemberRequest.getPassWord())
                 .getResultList().stream().findAny(); //null일수도 있으므로
     }
 
     @Override
     public  Optional<Member> idCheck(String id) {
-      return  em.createQuery("select m from Member m where m.memberId= :id").setParameter("id",id).getResultList().stream().findAny();
+      return  em.createQuery("select m from Member m where m.memberId= :id",Member.class)
+              .setParameter("id",id)
+              .getResultList().stream().findAny();
     }
 
     @Override
     public  Optional<Member> nickNameCheck(String nickName) {
-        return  em.createQuery("select m  from Member m where m.memberNickname= :nickName").setParameter("nickName",nickName).getResultList().stream().findAny();
+        return  em.createQuery("select m  from Member m where m.memberNickname= :nickName",Member.class)
+                .setParameter("nickName",nickName)
+                .getResultList().stream().findAny();
     }
 }
