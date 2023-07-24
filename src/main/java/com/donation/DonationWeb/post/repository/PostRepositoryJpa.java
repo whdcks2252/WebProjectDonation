@@ -2,12 +2,10 @@ package com.donation.DonationWeb.post.repository;
 
 import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.exception.PostException;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class PostRepositoryImp implements PostRepository {
+public class PostRepositoryJpa implements PostRepository {
 
     private final EntityManager em;
 
@@ -50,7 +48,7 @@ public class PostRepositoryImp implements PostRepository {
                         " join fetch p.member m" +
                         " join fetch p.categorie c" +
                         " left join fetch p.commemts co" +
-                        " where p.id=:postId ",Post.class)
+                        " where p.id=:postId ",Post.class) //레프트 조인해도 postId 값을 주니까 괜찮음
                 .setParameter("postId", postId).getResultList().stream().findAny();
 
     }

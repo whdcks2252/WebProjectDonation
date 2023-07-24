@@ -2,15 +2,12 @@ package com.donation.DonationWeb.controller;
 
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.exception.LoginException;
 import com.donation.DonationWeb.login.dto.LoginResponse;
 import com.donation.DonationWeb.login.service.LoginService;
 import com.donation.DonationWeb.member.dto.*;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.service.MemberService;
-import com.donation.DonationWeb.post.dto.PostListResponse;
-import com.donation.DonationWeb.post.dto.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,9 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.donation.DonationWeb.status.statusCode.RESPONSE_OK;
 
@@ -66,7 +61,7 @@ public class UserController {
     public Object login(@RequestBody @Validated LoginMemberRequest loginMemberRequest ) throws Exception {
 
 
-        Optional<Member> memberIDAndPassword = memberService.findMemberIDAndPassword(loginMemberRequest);
+        Optional<Member> memberIDAndPassword = memberService.findByMemberIdAndPassword(loginMemberRequest.getLoginId(),loginMemberRequest.getPassword());
 
         if(memberIDAndPassword.isPresent()) {
             log.info("{}",memberIDAndPassword.get().getId());

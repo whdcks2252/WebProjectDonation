@@ -18,17 +18,16 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/api/post/**","/api/user/*")
-                .excludePathPatterns("/api/user/login","/api/user/join","/api/user/idCheck","/api/user/nickNameCheck","/api/post/list"
-                        ,"/api/post/list/{categoryId}","/api/post/{postId}");
+                .addPathPatterns("/api/post/**", "/api/user/*")
+                .excludePathPatterns("/api/user/login", "/api/user/join", "/api/user/idCheck", "/api/user/nickNameCheck", "/api/post/list"
+                        , "/api/post/list/{categoryId}", "/api/post/{postId}");
 
         registry.addInterceptor(new CheckUserAccessInterceptor())
                 .order(2)
-                .addPathPatterns("/api/user/{id}").excludePathPatterns("/api/user/idCheck","/api/user/nickNameCheck","/api/user/logout","/api/user/login","/api/user/join");
+                .addPathPatterns("/api/user/{id}/**").excludePathPatterns("/api/user/idCheck", "/api/user/nickNameCheck", "/api/user/logout", "/api/user/login", "/api/user/join");
 
 
     }
-
 
 
     //argumentResolvers등록
@@ -38,3 +37,5 @@ public class WebConfig implements WebMvcConfigurer {
 
     }
 }
+
+

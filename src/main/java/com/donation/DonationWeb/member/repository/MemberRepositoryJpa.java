@@ -2,7 +2,6 @@ package com.donation.DonationWeb.member.repository;
 
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.exception.UserException;
-import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberRepositoryImp implements MemberRepository {
+public class MemberRepositoryJpa implements MemberRepository {
 
     private final EntityManager em;
 
@@ -75,11 +74,10 @@ public class MemberRepositoryImp implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest){
+    public Optional<Member> findByMemberId(String memberId){
 
-        return em.createQuery("select m from Member m where m.memberId = : loginId and m.password =:password",Member.class)
-                .setParameter("loginId", loginMemberRequest.getLoginId())
-                .setParameter("password",loginMemberRequest.getPassWord())
+        return em.createQuery("select m from Member m where m.memberId = : loginId",Member.class)
+                .setParameter("loginId", memberId)
                 .getResultList().stream().findAny(); //null일수도 있으므로
     }
 

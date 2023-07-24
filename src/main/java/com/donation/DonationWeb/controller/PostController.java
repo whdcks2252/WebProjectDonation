@@ -30,7 +30,7 @@ public class PostController {
 
     @GetMapping("/{postId}") //로그인 사용자만 접근가능
     public Object findByIdLeftJoin(@PathVariable Long postId) {
-      return PostResponse.createInstance(postService.findById(postId));
+      return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
     @GetMapping("/list")//조회는 시간순으로 페이징 조회
@@ -51,7 +51,7 @@ public class PostController {
     @PatchMapping("/{id}")
     public Object postUpdate(@PathVariable(name = "id") Long postid,@RequestBody @Validated UpdatePostRequest updatePostRequest, @Login  Long loginId) {
             postService.updatePost(updatePostRequest,postid,loginId);
-        //spring.jpa.open-in-view Lazy 성능 최적화 때문에 findByIdLeftJoin 호출
+        // Lazy n+1문제 때문에 findByIdLeftJoin 호출
         return PostResponse.createInstance(postService.findByIdLeftJoin(postid));
     }
 

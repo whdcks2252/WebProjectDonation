@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class InterestPostRepositoryImp implements InterestPostRepository {
+public class InterestPostRepositoryJpa implements InterestPostRepository {
 
     private final EntityManager em;
 

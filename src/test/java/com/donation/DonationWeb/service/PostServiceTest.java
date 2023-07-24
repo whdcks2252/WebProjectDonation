@@ -19,8 +19,6 @@ public class PostServiceTest {
     EntityManager em;
 
 
-    @BeforeEach
-
     void beforeEach() {
         //트랜잭션 시작
     }

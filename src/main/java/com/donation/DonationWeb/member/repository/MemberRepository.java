@@ -22,7 +22,7 @@ public interface MemberRepository  {
     Optional<Member> findUserPosts(Long memberId, Integer page);
     Optional<Member> findUserInterestPosts(Long memberId, Integer page);
 
-    Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);
+    Optional<Member> findByMemberId(String memberId);
 
     List<Member> findAll();
 

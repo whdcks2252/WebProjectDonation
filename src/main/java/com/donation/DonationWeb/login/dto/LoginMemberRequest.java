@@ -12,11 +12,11 @@ public class LoginMemberRequest {
     @NotBlank
     private String loginId;
     @NotBlank
-    private String passWord;
+    private String password;
 
-    public LoginMemberRequest(String loginId, String passWord) {
+    public LoginMemberRequest(String loginId, String password) {
         this.loginId = loginId;
-        this.passWord = passWord;
+        this.password = password;
     }
 
 }

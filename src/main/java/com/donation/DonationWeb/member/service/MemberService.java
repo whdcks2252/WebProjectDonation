@@ -25,7 +25,7 @@ public interface MemberService {
 
     List<Member> findAll();
 
-    Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest);
+    Optional<Member> findByMemberIdAndPassword(String memberId,String password);
 
     String idCheck(IdCheckRequest id);
     String nickNameCheck(NicknameCheckRequest nickName);

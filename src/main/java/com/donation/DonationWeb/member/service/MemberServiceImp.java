@@ -1,17 +1,13 @@
 package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.domain.ServiceAgreement;
 import com.donation.DonationWeb.exception.UserException;
-import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.IdCheckRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import com.donation.DonationWeb.member.repository.MemberRepository;
-import com.donation.DonationWeb.member.repository.MemberRepositoryImp;
-import com.donation.DonationWeb.post.service.PostService;
+import com.donation.DonationWeb.util.BCryptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +25,12 @@ public class MemberServiceImp implements MemberService{
     @Transactional
     @Override
     public Member save(AddMemberRequest addMemberRequest){
-        return memberRepository.save(addMemberRequest.toEntity());
+       if (memberRepository.idCheck(addMemberRequest.getMemberId()).isPresent())//유효성검사 id
+            throw new UserException(new UserException("이미 존재하는 회원 입니다 : " + addMemberRequest.getMemberId()));
+        else
+            return memberRepository.save(addMemberRequest.toEntity());
+
+
     }
 
     /**
@@ -65,15 +66,15 @@ public class MemberServiceImp implements MemberService{
     }
 
     @Override
-    public Optional<Member> findMemberIDAndPassword(LoginMemberRequest loginMemberRequest) {
-        Optional<Member> memberIDAndPassword = memberRepository.findMemberIDAndPassword(loginMemberRequest);
-
-        if (!memberIDAndPassword.isPresent()) {
+    public Optional<Member> findByMemberIdAndPassword(String memberId,String password) {
+        Optional<Member> findByMemberId = memberRepository.findByMemberId(memberId);
+        Member member = findByMemberId.orElseThrow(()->new UserException("not found : " + memberId));
+        if (!findByMemberId.isPresent()&&BCryptor.isMatch(member.getPassword(),password)) {
             return Optional.empty();
         }
 
 
-        return memberIDAndPassword;
+        return findByMemberId;
     }
 
     @Override

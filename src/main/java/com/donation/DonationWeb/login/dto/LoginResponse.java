@@ -9,10 +9,10 @@ import lombok.Getter;
 public class LoginResponse {
 
     private Long memberNum;
+    private String password;
     private String status;
     private String memberId;
     private String memberNickname;
-    private String password;
     private String memberName;
     private String memberPhone;
     private String email;

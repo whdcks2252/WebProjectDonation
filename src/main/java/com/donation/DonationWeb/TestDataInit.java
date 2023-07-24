@@ -36,13 +36,13 @@ public class TestDataInit {
         log.info("test data init");
 
         Member save = memberServiceImp.save(new AddMemberRequest
-                ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444", "sadasdasdas",
+                ("whdcks4", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444", "sadasdasdas",
                         "seoul","boroad","123",ServiceAgreement.YES));
         Member save2 = memberServiceImp.save(new AddMemberRequest
-                ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬",
+                ("whdcks5", "ㅎㅇㅎㅇ", "123123", "원종찬",
                         "01044444444", "sadasdasdas","seoul","boroad","123",ServiceAgreement.YES));
         Member save3 = memberServiceImp.save(new AddMemberRequest
-                ("whdcks", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444",
+                ("whdcks6", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444",
                         "sadasdasdas","seoul","boroad","123",ServiceAgreement.YES));
         memberServiceImp.findById(save.getId());
         memberServiceImp.update(save.getId(),new MemberUpdateDto("닉네임변경","123123","asgasgd","change","change","change"));
