@@ -26,7 +26,7 @@ public class MemberServiceImp implements MemberService{
     @Override
     public Member save(AddMemberRequest addMemberRequest){
        if (memberRepository.idCheck(addMemberRequest.getMemberId()).isPresent())//유효성검사 id
-            throw new UserException(new UserException("이미 존재하는 회원 입니다 : " + addMemberRequest.getMemberId()));
+            throw new UserException("이미 존재하는 회원 입니다 : " + addMemberRequest.getMemberId());
         else
             return memberRepository.save(addMemberRequest.toEntity());
 
@@ -52,7 +52,7 @@ public class MemberServiceImp implements MemberService{
     public List<Member> findAll() {return memberRepository.findAll();}
 
     @Override
-    public Member findById(Long memberId) {return memberRepository.findById(memberId).orElseThrow(() -> new UserException("not found : " + memberId));}
+    public Member findById(Long memberId) {return findByIdUserPresent(memberRepository.findById(memberId),memberId);}
 
     @Override
     public Member findUserPosts(Long memberId,Integer page) {
@@ -69,6 +69,7 @@ public class MemberServiceImp implements MemberService{
     public Optional<Member> findByMemberIdAndPassword(String memberId,String password) {
         Optional<Member> findByMemberId = memberRepository.findByMemberId(memberId);
         Member member = findByMemberId.orElseThrow(()->new UserException("not found : " + memberId));
+
         if (!findByMemberId.isPresent()&&BCryptor.isMatch(member.getPassword(),password)) {
             return Optional.empty();
         }
@@ -88,6 +89,7 @@ public class MemberServiceImp implements MemberService{
             return "사용가능한 아이디 입니다.";
         }
     }
+
     @Override
     public String nickNameCheck(NicknameCheckRequest nickName) {
         Optional<Member> nickNameCheck = memberRepository.nickNameCheck(nickName.getNickName());
@@ -99,4 +101,10 @@ public class MemberServiceImp implements MemberService{
             return "사용가능한 닉네임 입니다.";
         }
     }
+
+    private Member findByIdUserPresent(Optional<Member> member,Long memberId){
+        return member.orElseThrow(()->new UserException("not found memberId : " + memberId));
+
+    }
+
 }

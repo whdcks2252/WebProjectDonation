@@ -2,10 +2,8 @@ package com.donation.DonationWeb.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-
+//비밀번호 암호화
 public class BCryptor{
-
-
 
     public static String encrypt(String password) {
 

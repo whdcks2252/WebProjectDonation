@@ -63,7 +63,7 @@ public class PostServiceImp implements PostService {
     public void updatePost(UpdatePostRequest upPost,Long postId, Long loginId) {
         Post findPost = findById(postId);
 
-        if (postMemberValidation(postId, loginId)) {
+        if (postMemberValidation(findPost, loginId)) {
             if(categoryExist(upPost.getCategoryNum())){
                 Category findCategory = categoryService.findById(upPost.getCategoryNum());
                 postRepository.update(upPost,findPost,findCategory);
@@ -78,9 +78,9 @@ public class PostServiceImp implements PostService {
     @Transactional
     @Override
     public void delete(Long postId,Long loginId) {
+        Post findPost = findById(postId);
 
-        if(postMemberValidation(postId,loginId) ){//멤버 아이디랑 게시물을 검증한다
-            Post findPost = findById(postId);
+        if(postMemberValidation(findPost,loginId) ){//멤버 아이디랑 게시물을 검증한다
             postRepository.delete(findPost);
 
         }else
@@ -91,17 +91,17 @@ public class PostServiceImp implements PostService {
     }
 
 
-
-    private boolean postMemberValidation(Long postId,Long loginId) {//로그인된 멤버 아이디랑 게시물을 검증한다
-        Post postById = findById(postId);
+    private boolean postMemberValidation(Post post,Long loginId) {//로그인된 멤버 아이디랑 게시물을 검증한다
         Member findByLoginId = memberService.findById(loginId);
 
-        if(findByLoginId.getId()==postById.getMember().getId() ){
+        if(findByLoginId.getId()==post.getMember().getId() ){
             return true;
         }
 
         return false;
     }
+
+
     private boolean categoryExist(Long categoryId) {//카테고리 변경
         if (categoryId!=null){
             return true;

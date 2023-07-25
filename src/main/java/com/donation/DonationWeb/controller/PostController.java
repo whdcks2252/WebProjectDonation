@@ -28,7 +28,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/{postId}") //로그인 사용자만 접근가능
+    @GetMapping("/donation/{postId}") //로그인 사용자만 접근가능
     public Object findByIdLeftJoin(@PathVariable Long postId) {
       return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }

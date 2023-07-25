@@ -26,7 +26,6 @@ public class CheckUserAccessInterceptor implements HandlerInterceptor {
 
         Long pathId = Long.parseLong(request.getRequestURI().replaceAll("[^0-9]", "")); //세션 id랑 경로 자원의 아이디랑 유효성 검사
         log.info("test={}", request.getRequestURI().replaceAll("[^0-9]",""));
-
         if ( !session.getAttribute(SessionConst.LOGIN_MEMBER).equals(pathId)) {
             log.info("미인증 사용자 요청");
             Map<String, String> errorResult = new HashMap<>();

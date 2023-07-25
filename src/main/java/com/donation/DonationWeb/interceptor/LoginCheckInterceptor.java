@@ -1,6 +1,5 @@
 package com.donation.DonationWeb.interceptor;
 
-import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.login.session.SessionConst;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
