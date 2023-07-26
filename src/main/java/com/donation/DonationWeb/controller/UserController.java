@@ -43,7 +43,7 @@ public class UserController {
                 createInstance(memberService.findById(id));
     }
 
-    @GetMapping("/{id}/post") //조회는 시간순으로 페이징 조회 10개씩
+    @GetMapping("/{id}/posts") //조회는 시간순으로 페이징 조회 10개씩
     public Object findUserPost(@PathVariable Long id,@RequestParam(defaultValue="1") Integer page) {
         Member findPosts = memberService.findUserPosts(id, page);
 

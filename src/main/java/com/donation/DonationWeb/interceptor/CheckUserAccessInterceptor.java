@@ -26,10 +26,23 @@ public class CheckUserAccessInterceptor implements HandlerInterceptor {
 
         Long pathId = Long.parseLong(request.getRequestURI().replaceAll("[^0-9]", "")); //세션 id랑 경로 자원의 아이디랑 유효성 검사
         log.info("test={}", request.getRequestURI().replaceAll("[^0-9]",""));
-        if ( !session.getAttribute(SessionConst.LOGIN_MEMBER).equals(pathId)) {
+
+        if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
             log.info("미인증 사용자 요청");
             Map<String, String> errorResult = new HashMap<>();
             errorResult.put("message", "미인증 사용자 요청");
+            String result = objectMapper.writeValueAsString(errorResult);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().write(result);
+            return false;
+        }
+        else if(!session.getAttribute(SessionConst.LOGIN_MEMBER).equals(pathId))
+        {
+            log.info("사용자의 자원이 아닙니다");
+            Map<String, String> errorResult = new HashMap<>();
+            errorResult.put("message", "사용자의 자원이 아닙니다");
             String result = objectMapper.writeValueAsString(errorResult);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
