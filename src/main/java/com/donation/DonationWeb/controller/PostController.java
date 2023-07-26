@@ -21,14 +21,13 @@ import java.util.stream.Collectors;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/create")
+    @PostMapping
     public Object createPost(@RequestBody @Validated AddPostRequest addPostRequest, @Login Long id) {
         log.info("id={}",id);
         return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,id)),HttpStatus.CREATED);
-
     }
 
-    @GetMapping("/donation/{postId}") //로그인 사용자만 접근가능
+    @GetMapping("/{postId}") //로그인 사용자만 접근가능
     public Object findByIdLeftJoin(@PathVariable Long postId) {
       return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
