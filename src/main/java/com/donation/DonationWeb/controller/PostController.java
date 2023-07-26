@@ -27,12 +27,12 @@ public class PostController {
         return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,id)),HttpStatus.CREATED);
     }
 
-    @GetMapping("/{postId}") //로그인 사용자만 접근가능
+    @GetMapping("/{postId}")
     public Object findByIdLeftJoin(@PathVariable Long postId) {
       return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
-    @GetMapping("/list")//조회는 시간순으로 페이징 조회
+    @GetMapping//조회는 시간순으로 페이징 조회
     public Object findByIdPage(@RequestParam(defaultValue="1") Integer page) {
         List<Post> findPosts = postService.findByPage(page);
         List<PostListResponse> collect = findPosts.stream().map((m) -> PostListResponse.createInstance(m)).collect(Collectors.toList());
