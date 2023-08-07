@@ -6,7 +6,7 @@ import lombok.Getter;
 
 public enum ServiceAgreement {
     YES("yes"),NO("no");
-
+    //소문자 yes나 no를 받아야 함
 
     @Getter
     private final String value;

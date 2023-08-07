@@ -89,6 +89,9 @@ public class Post extends ObjectTime {
         }
 
     }
+    public void updateCurrentAmount(Integer updateAmount) {
+        this.currentAmount += updateAmount;
+    }
 
 
 }
