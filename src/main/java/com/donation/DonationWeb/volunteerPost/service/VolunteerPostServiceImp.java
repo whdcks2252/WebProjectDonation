@@ -84,7 +84,6 @@ public class VolunteerPostServiceImp implements VolunteerPostService {
 
     @Override
     public Integer currentParticipantAmount(Long volunteerPostId) {
-        log.info(String.valueOf(volunteerPostRepository.findParticipants(volunteerPostId).size()));
         return volunteerPostRepository.findParticipants(volunteerPostId).size();
     }
 
