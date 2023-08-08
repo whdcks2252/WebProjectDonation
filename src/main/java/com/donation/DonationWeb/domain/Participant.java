@@ -7,35 +7,27 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-//관심 게시판
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-public class InterestPost extends ObjectTime{
-
+public class Participant extends ObjectTime{
     @Id
     @GeneratedValue
-    @Column(name="post_inter_num")
+    @Column(name = "participant_num")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "post_num",nullable = false)
-   private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "volunteer_num",nullable = false)
     private VolunteerPost volunteerPost;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "member_id",nullable = false)
     private Member member;
 
     @Builder
-    public InterestPost(Post post, Member member, VolunteerPost volunteerPost) {
-
-        this.post = post;
+    public Participant(VolunteerPost volunteerPost, Member member) {
         this.volunteerPost = volunteerPost;
         this.member = member;
     }

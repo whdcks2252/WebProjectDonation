@@ -60,6 +60,9 @@ public class Member extends ObjectTime {
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<VolunteerPost> volunteerPosts = new ArrayList<>();
+
     @OneToOne
     @JoinColumn(name = "bank_num")
     private Bank bank;
@@ -70,6 +73,9 @@ public class Member extends ObjectTime {
 
     @OneToMany(mappedBy = "member")
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Participant> participants = new ArrayList<>();
 
 
 
