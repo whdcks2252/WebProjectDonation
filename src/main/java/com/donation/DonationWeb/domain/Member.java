@@ -60,13 +60,6 @@ public class Member extends ObjectTime {
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToOne(mappedBy="member")
-    private UserPay userPay;
-
-    @OneToMany(mappedBy = "member")
-    private List<Payment> payments = new ArrayList<>();
-
-
     //주소
     @Embedded
     private Address address;
