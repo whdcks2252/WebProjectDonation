@@ -70,15 +70,7 @@ public class ArgumentVaildException {
 
         return errormessage;
     }
-
-    //UserPay예외처리
-    @ExceptionHandler(UserPayException.class)
-    public Object postException(UserPayException e){
-        Map<String, Object> errormessage = new HashMap<>();
-        errormessage.put("message", e.getMessage());
-
-        return errormessage;
-    }
+    
     //KaKaoPay예외처리
     @ExceptionHandler(KakaoPayException.class)
     public Object postException(KakaoPayException e){
