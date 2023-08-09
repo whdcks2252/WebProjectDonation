@@ -25,4 +25,5 @@ public interface VolunteerPostService {
     public Integer currentParticipantAmount(Long volunteerPostId);
 
     public void updateCurrentParticipantAmount(Long volunteerPostId);
+
 }

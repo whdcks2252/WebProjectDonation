@@ -69,6 +69,7 @@ public class VolunteerPostServiceImp implements VolunteerPostService {
         }
     }
 
+    @Transactional
     @Override
     public void delete(Long volunteerPostId, Long loginId) {
         VolunteerPost findPost = findById(volunteerPostId);

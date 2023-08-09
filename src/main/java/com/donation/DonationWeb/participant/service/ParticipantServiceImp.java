@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,8 +32,8 @@ public class ParticipantServiceImp implements ParticipantService{
         if(checkParticipantAlready(volunteerPostId, loginId))
         {
             log.info("delete");
-            Participant findParticipant = findByLoginIdAndPostId(volunteerPostId, loginId);//이미 등록되있는 관심게시물 찾기
-            participantRepository.delete(findParticipant);//이미 등록되있는 관심게시물 삭제
+            Participant findParticipant = findByLoginIdAndPostId(volunteerPostId, loginId);//이미 참가자 찾기
+            participantRepository.delete(findParticipant);//이미 참가자 삭제
             return Optional.empty();
 
         }
@@ -49,11 +50,15 @@ public class ParticipantServiceImp implements ParticipantService{
         return participantRepository.findByLoginIdAndPostId(volunteerPostId, loginId).orElseThrow(()->new PostException("not found by volunteerPostId :"+volunteerPostId+" loginId : "+loginId));
     }
 
-    private Boolean checkParticipantAlready(Long volunteerPostId, Long loginId) { //관심게시물 원래 있는지 확인
+    private Boolean checkParticipantAlready(Long volunteerPostId, Long loginId) { //참가자 원래 있는지 확인
         return participantRepository.findByLoginIdAndPostId(volunteerPostId, loginId).isPresent();
     }
 
     private static Participant ParticipantToEntity(Member findMember, VolunteerPost findPost) {
         return Participant.builder().volunteerPost(findPost).member(findMember).build();
+    }
+
+    public List<Participant> findByIdPage(Long volunteerPostId,Integer page){
+        return participantRepository.findByIdPage(volunteerPostId,page);
     }
 }

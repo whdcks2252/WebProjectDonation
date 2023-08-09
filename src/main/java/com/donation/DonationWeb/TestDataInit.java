@@ -3,6 +3,8 @@ package com.donation.DonationWeb;
 import com.donation.DonationWeb.category.dto.AddCategoryRequest;
 import com.donation.DonationWeb.category.dto.UpdateCategoryRequest;
 import com.donation.DonationWeb.category.service.CategoryServiceImp;
+import com.donation.DonationWeb.comment.dto.AddCommentRequest;
+import com.donation.DonationWeb.comment.service.CommentService;
 import com.donation.DonationWeb.domain.*;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
@@ -32,6 +34,7 @@ public class TestDataInit {
     private final MemberServiceImp memberServiceImp;
     private final VolunteerPostService volunteerPostService;
     private final ParticipantService participantService;
+    private final CommentService commentService;
     /**
      * 확인용 초기 데이터 추가
      */
