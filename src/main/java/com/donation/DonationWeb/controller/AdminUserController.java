@@ -80,6 +80,14 @@ public class AdminUserController {
         return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
+    @GetMapping("/posts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    public Object findByCategry(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
+        List<Post> findPosts = postService.findByCategry(name, page);
+        List<PostListResponse> collect = findPosts.stream().map((m) -> PostListResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
+
+    }
+
     @DeleteMapping("/posts/{postId}")
     public Object postDelete(@PathVariable(name = "postId") Long postId) {
         postService.delete(postId,postService.findById(postId).getMember().getId());
@@ -100,6 +108,13 @@ public class AdminUserController {
         return VolunteerPostResponse.createInstance(volunteerPostService.findByIdLeftJoin(volunteerPostId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
+    @GetMapping("/volunteerPosts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    public Object findByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
+        List<VolunteerPost> findPosts = volunteerPostService.findByCategory(name, page);
+        List<VolunteerPostListResponse> collect = findPosts.stream().map((m) -> VolunteerPostListResponse.createInstance(m)).collect(Collectors.toList());
+        return com.donation.DonationWeb.volunteerPost.dto.Result.createInstance(collect);
+    }
+
     @DeleteMapping("/volunteerPosts/{volunteerPostId}")
     public Object volunteerPostDelete(@PathVariable(name = "volunteerPostId") Long volunteerPostId) {
         volunteerPostService.delete(volunteerPostId,volunteerPostService.findById(volunteerPostId).getMember().getId());
@@ -115,8 +130,6 @@ public class AdminUserController {
         return Result.createInstance(collect);
 
     }
-
-
 
 
 }

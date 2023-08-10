@@ -35,7 +35,6 @@ public class VolunteerPostController {
     @GetMapping("/{volunteerPostId}")
     public Object findByIdLeftJoin(@PathVariable Long volunteerPostId) {
         VolunteerPost volunteerPost = volunteerPostService.findByIdLeftJoin(volunteerPostId);
-        volunteerPostService.updateCurrentParticipantAmount(volunteerPostId); //봉사참가자수 업데이트
         return VolunteerPostResponse.createInstance(volunteerPost);    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 

@@ -34,6 +34,7 @@ public class ParticipantServiceImp implements ParticipantService{
             log.info("delete");
             Participant findParticipant = findByLoginIdAndPostId(volunteerPostId, loginId);//이미 참가자 찾기
             participantRepository.delete(findParticipant);//이미 참가자 삭제
+            volunteerPostService.updateCurrentParticipantAmount(volunteerPostId); //봉사참가자수 업데이트
             return Optional.empty();
 
         }
@@ -41,6 +42,7 @@ public class ParticipantServiceImp implements ParticipantService{
             log.info("create");
             Participant participant = ParticipantToEntity(findMember, findPost);
             participantRepository.save(participant);
+            volunteerPostService.updateCurrentParticipantAmount(volunteerPostId); //봉사참가자수 업데이트
             return Optional.of(true);
         }
     }
