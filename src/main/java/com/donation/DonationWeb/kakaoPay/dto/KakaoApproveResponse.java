@@ -19,12 +19,12 @@ public class KakaoApproveResponse {
         private String partner_user_id; // 가맹점 회원 id
         private String payment_method_type; // 결제 수단
         private Amount amount; // 결제 금액 정보
-        private CardInfo card_info;
         private String item_name; // 상품명
         private String item_code; // 상품 코드
         private Integer quantity; // 상품 수량
         private LocalDateTime created_at; // 결제 요청 시간
         private LocalDateTime approved_at; // 결제 승인 시간
         private String payload; // 결제 승인 요청에 대해 저장 값, 요청 시 전달 내용
+
 
 }

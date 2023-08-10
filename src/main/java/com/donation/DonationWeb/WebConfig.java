@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns( "/api/user/*")
+                .addPathPatterns( "/api/user/*","/kakaopay/**")
                 .excludePathPatterns("/api/user/login", "/api/user/join", "/api/user/idCheck", "/api/user/nickNameCheck");
         registry.addInterceptor(new CheckUserAccessInterceptor())
                 .order(3)

@@ -7,4 +7,6 @@ import com.donation.DonationWeb.kakaoPay.dto.KakaoApproveResponse;
 public interface PaymentApproveService {
     PaymentApprove save(KakaoApproveResponse kakaoReadyResponse, Post post, Member member);
 
+    PaymentApprove findById(Long paymentId);
+
 }

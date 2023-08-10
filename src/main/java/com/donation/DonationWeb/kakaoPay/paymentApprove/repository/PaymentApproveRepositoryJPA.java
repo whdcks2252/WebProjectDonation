@@ -1,6 +1,5 @@
 package com.donation.DonationWeb.kakaoPay.paymentApprove.repository;
 import com.donation.DonationWeb.domain.PaymentApprove;
-import com.donation.DonationWeb.domain.PaymentReady;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +19,11 @@ public class PaymentApproveRepositoryJPA implements PaymentApproveRepository {
 
     }
 
+    @Override
+    public Optional<PaymentApprove> findById(Long paymentId) {
+        return Optional.ofNullable(em.find(PaymentApprove.class, paymentId));
+
+    }
 
 
 
