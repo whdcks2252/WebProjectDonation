@@ -31,4 +31,9 @@ public class AdminUserServiceImp implements AdminUserService{
         return findByAdminUserId;
     }
 
+    @Override
+    public Member findById(Long memberId) {
+        return null;
+    }
+
 }

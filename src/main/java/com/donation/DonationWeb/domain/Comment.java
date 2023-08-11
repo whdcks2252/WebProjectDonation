@@ -32,15 +32,20 @@ public class Comment extends ObjectTime{
     private VolunteerPost volunteerPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_num",nullable = false)
+    private ReviewPost reviewPost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
 
 
     @Builder
-    public Comment(String content, Post post, Member member, VolunteerPost volunteerPost) {
+    public Comment(String content, Post post, Member member, VolunteerPost volunteerPost, ReviewPost reviewPost) {
         this.content = content;
         this.post = post;
+        this.reviewPost = reviewPost;
         this.volunteerPost = volunteerPost;
         this.member = member;
 

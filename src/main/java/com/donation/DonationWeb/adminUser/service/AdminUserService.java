@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface AdminUserService {
     Optional<AdminUser> findByAdminUserIdAndPassword(String adminUserId, String password);
 
+    Member findById(Long memberId);
+
 }

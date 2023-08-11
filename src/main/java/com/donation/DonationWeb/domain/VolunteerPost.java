@@ -61,13 +61,13 @@ public class VolunteerPost extends ObjectTime {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "volunteerPost")
+    @OneToMany(mappedBy = "volunteer_post")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteerPost")
+    @OneToMany(mappedBy = "volunteer_post")
     private List<Comment> commemts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteerPost")
+    @OneToMany(mappedBy = "volunteer_post")
     private List<InterestPost> interestPosts = new ArrayList<>();
 
     @Column(name = "need_amount")
@@ -91,6 +91,9 @@ public class VolunteerPost extends ObjectTime {
         if (categorie != null) {
             this.categorie = categorie;
 
+        }
+        if (request.getNeedAmount() != null){
+            this.needAmount = request.getNeedAmount();
         }
 
     }

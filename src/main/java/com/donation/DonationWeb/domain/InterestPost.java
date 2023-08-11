@@ -28,15 +28,20 @@ public class InterestPost extends ObjectTime{
     @JoinColumn(name = "volunteer_num",nullable = false)
     private VolunteerPost volunteerPost;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_num",nullable = false)
+    private ReviewPost reviewPost;
+
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Builder
-    public InterestPost(Post post, Member member, VolunteerPost volunteerPost) {
+    public InterestPost(Post post, Member member, VolunteerPost volunteerPost, ReviewPost reviewPost) {
 
         this.post = post;
         this.volunteerPost = volunteerPost;
+        this.reviewPost = reviewPost;
         this.member = member;
     }
 }

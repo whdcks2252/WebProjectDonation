@@ -16,6 +16,9 @@ import com.donation.DonationWeb.post.dto.PostListResponse;
 import com.donation.DonationWeb.post.dto.PostResponse;
 import com.donation.DonationWeb.post.dto.Result;
 import com.donation.DonationWeb.post.service.PostService;
+import com.donation.DonationWeb.reviewPost.dto.ReviewPostListResponse;
+import com.donation.DonationWeb.reviewPost.dto.ReviewPostResponse;
+import com.donation.DonationWeb.reviewPost.service.ReviewPostService;
 import com.donation.DonationWeb.volunteerPost.dto.VolunteerPostListResponse;
 import com.donation.DonationWeb.volunteerPost.dto.VolunteerPostResponse;
 import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
@@ -44,6 +47,7 @@ public class AdminUserController {
     private final PostService postService;
     private final VolunteerPostService volunteerPostService;
     private final ParticipantService participantService;
+    private final ReviewPostService reviewPostService;
 
 
     @PostMapping("/login")
@@ -109,10 +113,10 @@ public class AdminUserController {
     }
 
     @GetMapping("/volunteerPosts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
-    public Object findByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
+    public Object findVolunteerPostsByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
         List<VolunteerPost> findPosts = volunteerPostService.findByCategory(name, page);
         List<VolunteerPostListResponse> collect = findPosts.stream().map((m) -> VolunteerPostListResponse.createInstance(m)).collect(Collectors.toList());
-        return com.donation.DonationWeb.volunteerPost.dto.Result.createInstance(collect);
+        return Result.createInstance(collect);
     }
 
     @DeleteMapping("/volunteerPosts/{volunteerPostId}")
@@ -128,6 +132,39 @@ public class AdminUserController {
         List<Participant> findParticipants = participantService.findByIdPage(volunteerPostId, page);
         List<ParticipantListResponse> collect = findParticipants.stream().map((m) -> ParticipantListResponse.createInstance(m)).collect(Collectors.toList());
         return Result.createInstance(collect);
+
+    }
+
+    @GetMapping ("/reviewPosts")
+    public Object findReviewPostsByPage(@RequestParam(defaultValue="1") Integer page) {
+        List<ReviewPost> findPosts = reviewPostService.findByPage(page);
+        List<ReviewPostListResponse> collect = findPosts.stream().map((m) -> ReviewPostListResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
+    }
+
+    @GetMapping("/reviewPosts/{reviewPostId}")
+    public Object findReviewPostByIdLeftJoin(@PathVariable Long reviewPostId) {
+        return ReviewPostResponse.createInstance(reviewPostService.findByIdLeftJoin(reviewPostId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
+    }
+
+    @GetMapping("/reviewPosts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    public Object findReviewPostsByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
+        List<ReviewPost> findPosts = reviewPostService.findByCategory(name, page);
+        List<ReviewPostListResponse> collect = findPosts.stream().map((m) -> ReviewPostListResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
+    }
+
+    @GetMapping("/reviewPosts/{postTitle}") //기부 게시글 제목으로 기부 게시글의 후기 게시물 조회
+    public Object findByPostTitle(@PathVariable String postTitle) {
+        ReviewPost reviewPost = reviewPostService.findByPostTitle(postTitle);
+        return ReviewPostResponse.createInstance(reviewPost);
+    }
+
+    @DeleteMapping("/reviewPosts/{reviewPostId}")
+    public Object reviewPostDelete(@PathVariable(name = "reviewPostId") Long reviewPostId) {
+        reviewPostService.delete(reviewPostId,reviewPostService.findById(reviewPostId).getMember().getId());
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
