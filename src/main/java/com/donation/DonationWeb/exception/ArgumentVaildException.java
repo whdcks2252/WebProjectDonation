@@ -55,7 +55,7 @@ public class ArgumentVaildException {
     }
     //댓글 예외처리
     @ExceptionHandler(CommentException.class)
-    public Object Comment(CommentException e){
+    public Object commentException(CommentException e){
         Map<String, Object> errormessage = new HashMap<>();
         errormessage.put("message", e.getMessage());
 
@@ -65,6 +65,23 @@ public class ArgumentVaildException {
     //포스트예외처리
     @ExceptionHandler(PostException.class)
     public Object postException(PostException e){
+        Map<String, Object> errormessage = new HashMap<>();
+        errormessage.put("message", e.getMessage());
+
+        return errormessage;
+    }
+    
+    //KaKaoPay예외처리
+    @ExceptionHandler(KakaoPayException.class)
+    public Object postException(KakaoPayException e){
+        Map<String, Object> errormessage = new HashMap<>();
+        errormessage.put("message", e.getMessage());
+
+        return errormessage;
+    }
+    //PaymentReadyException 예외처리
+    @ExceptionHandler(PaymentReadyException.class)
+    public Object postException(PaymentReadyException e){
         Map<String, Object> errormessage = new HashMap<>();
         errormessage.put("message", e.getMessage());
 

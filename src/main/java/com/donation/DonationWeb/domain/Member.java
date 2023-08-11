@@ -66,21 +66,8 @@ public class Member extends ObjectTime {
     @OneToMany(mappedBy = "member")
     private List<ReviewPost> reviewPosts = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "bank_num")
-    private Bank bank;
-
-    @OneToOne
-    @JoinColumn(name = "user_pay_num")
-    private UserPay userPay;
-
-    @OneToMany(mappedBy = "member")
-    private List<Payment> payments = new ArrayList<>();
-
     @OneToMany(mappedBy = "member")
     private List<Participant> participants = new ArrayList<>();
-
-
 
     //주소
     @Embedded
@@ -106,4 +93,6 @@ public class Member extends ObjectTime {
                     if (memberUpdateDto.getStreet() != null)
                         this.address = new Address(memberUpdateDto.getCity(), memberUpdateDto.getStreet(), memberUpdateDto.getZipcode());
                                     }
+
+
 }
