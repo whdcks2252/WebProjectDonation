@@ -60,9 +60,6 @@ public class Post extends ObjectTime {
     @OneToMany(mappedBy = "post")
     private List<InterestPost> interestPosts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
-    private List<Payment> payments = new ArrayList<>();
-
 
     @Column(name = "target_amount")
     private Integer targetAmount;
@@ -88,6 +85,9 @@ public class Post extends ObjectTime {
 
         }
 
+    }
+    public void updateCurrentAmount(Integer updateAmount) {
+        this.currentAmount += updateAmount;
     }
 
 
