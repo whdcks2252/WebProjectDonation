@@ -20,8 +20,6 @@ public interface ReviewPostService {
 
     public List<ReviewPost> findByCategory(String categoryName, Integer page);
 
-    public ReviewPost findByPostTitle(String postTitle);
-
     public void updatePost(UpdateReviewPostRequest request, Long reviewPostId, Long loginId);
 
     public void delete(Long reviewPostId, Long loginId);

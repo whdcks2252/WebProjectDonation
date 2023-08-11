@@ -6,7 +6,9 @@ import com.donation.DonationWeb.comment.service.CommentServiceImp;
 import com.donation.DonationWeb.member.service.MemberServiceImp;
 import com.donation.DonationWeb.participant.service.ParticipantService;
 import com.donation.DonationWeb.participant.service.ParticipantServiceImp;
+import com.donation.DonationWeb.post.service.PostService;
 import com.donation.DonationWeb.post.service.PostServiceImp;
+import com.donation.DonationWeb.reviewPost.service.ReviewPostServiceImp;
 import com.donation.DonationWeb.volunteerPost.service.VolunteerPostServiceImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +27,7 @@ public class DonationWebApplication {
 		}
 	@Bean
 	@Profile("local")
-	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp, MemberServiceImp memberServiceImp, VolunteerPostServiceImp volunteerPostServiceImp, ParticipantServiceImp participantServiceImp, CommentServiceImp commentServiceImp) {
-		return new TestDataInit(itemRepository,categoryServiceImp,em,memberServiceImp,volunteerPostServiceImp, participantServiceImp, commentServiceImp);
+	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp, MemberServiceImp memberServiceImp, VolunteerPostServiceImp volunteerPostServiceImp, ParticipantServiceImp participantServiceImp, CommentServiceImp commentServiceImp, ReviewPostServiceImp reviewPostServiceImp) {
+		return new TestDataInit(itemRepository,categoryServiceImp,em,memberServiceImp,volunteerPostServiceImp, participantServiceImp, commentServiceImp, reviewPostServiceImp);
 	}
 }

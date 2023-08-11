@@ -29,11 +29,9 @@ public class ReviewPostServiceImp implements ReviewPostService{
     @Transactional
     @Override
     public ReviewPost savePost(CreateReviewPostRequest request, Long id) {
-        return null;
-//        Member member = memberService.findById(id);
-//        Category category = categoryService.findByName(request.getCategoryName());
-//        Post post = postService.findByTitle(request.getPostTitle());
-//        return reviewPostRepository.save(request.toEntity(category,member,post));
+        Category category = categoryService.findByName(request.getCategoryName());
+        Post post = postService.findById(request.getPostId());
+        return reviewPostRepository.save(request.toEntity(category,post));
     }
 
     @Override
@@ -56,27 +54,21 @@ public class ReviewPostServiceImp implements ReviewPostService{
         return reviewPostRepository.findByCategory(categoryService.findByName(categoryName).getId(), page);
     }
 
-    @Override
-    public ReviewPost findByPostTitle(String postTitle) {
-        return null;
-//        return reviewPostRepository.findByPostTitle(postService.findByTitle(postTitle).getId()).orElseThrow(() -> new PostException("not found postTitle: " + postTitle));
-    }
-
     @Transactional
     @Override
     public void updatePost(UpdateReviewPostRequest request, Long reviewPostId, Long loginId) {
 
 
-//        ReviewPost findReviewPost = findById(reviewPostId);
-//
-//        if (postMemberValidation(findReviewPost, loginId)) {
-//            Category findCategory = categoryService.findByName(request.getCategoryName());
-//            Post findpost = postService.findByTitle(request.getPostTitle());
-//            reviewPostRepository.update(request,findReviewPost,findCategory,findpost);
-//        }
-//        else {
-//            throw new PostException("업데이트가 실패 하였습니다");
-//        }
+        ReviewPost findReviewPost = findById(reviewPostId);
+
+        if (postMemberValidation(findReviewPost, loginId)) {
+            Category findCategory = categoryService.findByName(request.getCategoryName());
+            Post findpost = postService.findById(request.getPostId());
+            reviewPostRepository.update(request,findReviewPost,findCategory,findpost);
+        }
+        else {
+            throw new PostException("업데이트가 실패 하였습니다");
+        }
     }
 
     @Transactional
@@ -96,7 +88,7 @@ public class ReviewPostServiceImp implements ReviewPostService{
     private boolean postMemberValidation(ReviewPost reviewPost,Long loginId) {//로그인된 멤버 아이디랑 게시물을 검증한다
         Member findByLoginId = memberService.findById(loginId);
 
-        if(findByLoginId.getId()==reviewPost.getMember().getId() ){
+        if(findByLoginId.getId()==reviewPost.getPost().getMember().getId() ){
             return true;
         }
 

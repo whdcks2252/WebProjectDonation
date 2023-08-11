@@ -154,15 +154,9 @@ public class AdminUserController {
         return Result.createInstance(collect);
     }
 
-    @GetMapping("/reviewPosts/{postTitle}") //기부 게시글 제목으로 기부 게시글의 후기 게시물 조회
-    public Object findByPostTitle(@PathVariable String postTitle) {
-        ReviewPost reviewPost = reviewPostService.findByPostTitle(postTitle);
-        return ReviewPostResponse.createInstance(reviewPost);
-    }
-
     @DeleteMapping("/reviewPosts/{reviewPostId}")
     public Object reviewPostDelete(@PathVariable(name = "reviewPostId") Long reviewPostId) {
-        reviewPostService.delete(reviewPostId,reviewPostService.findById(reviewPostId).getMember().getId());
+        reviewPostService.delete(reviewPostId,reviewPostService.findById(reviewPostId).getPost().getMember().getId());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

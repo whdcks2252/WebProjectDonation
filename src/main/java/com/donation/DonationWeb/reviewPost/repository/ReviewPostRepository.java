@@ -21,8 +21,6 @@ public interface ReviewPostRepository {
 
     List<ReviewPost> findByCategory(Long categoryId, Integer page);
 
-    Optional<ReviewPost> findByPostTitle(Long postId);
-
     void update(UpdateReviewPostRequest request, ReviewPost reviewPost, Category category, Post post);
 
     void delete(ReviewPost reviewPost);

@@ -15,7 +15,6 @@ public class ReviewPostListResponse {
     private String title;
     private String categoryName;
     private Long categoryNum;
-    private String postTitle;
     private Long postId;
     private String memberId;
     private String memberNickname;
@@ -23,7 +22,7 @@ public class ReviewPostListResponse {
     private LocalDateTime updateTime;
 
     public static ReviewPostListResponse createInstance(ReviewPost reviewPost) {
-        return new ReviewPostListResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getTitle(), reviewPost.getPost().getId(),
-                reviewPost.getMember().getMemberId(), reviewPost.getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime());
+        return new ReviewPostListResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getId(),
+                reviewPost.getPost().getMember().getMemberId(), reviewPost.getPost().getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime());
     }
 }

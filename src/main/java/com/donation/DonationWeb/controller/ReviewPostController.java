@@ -51,12 +51,6 @@ public class ReviewPostController {
         return Result.createInstance(collect);
     }
 
-    @GetMapping("/{postTitle}") //기부 게시글 제목으로 기부 게시글의 후기 게시물 조회
-    public Object findByPostTitle(@PathVariable String postTitle) {
-        ReviewPost reviewPost = reviewPostService.findByPostTitle(postTitle);
-        return ReviewPostResponse.createInstance(reviewPost);
-    }
-
     @PatchMapping("/{reviewPostId}")
     public Object updateReviewPost(@PathVariable Long reviewPostId, @RequestBody @Validated UpdateReviewPostRequest request, @Login  Long loginId) {
         reviewPostService.updatePost(request,reviewPostId,loginId);

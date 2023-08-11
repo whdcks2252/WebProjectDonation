@@ -13,6 +13,8 @@ import com.donation.DonationWeb.participant.service.ParticipantService;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.post.dto.AddPostRequest;
 import com.donation.DonationWeb.post.service.PostServiceImp;
+import com.donation.DonationWeb.reviewPost.dto.CreateReviewPostRequest;
+import com.donation.DonationWeb.reviewPost.service.ReviewPostService;
 import com.donation.DonationWeb.volunteerPost.dto.CreateVolunteerPostRequest;
 import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class TestDataInit {
     private final VolunteerPostService volunteerPostService;
     private final ParticipantService participantService;
     private final CommentService commentService;
+    private final ReviewPostService reviewPostService;
     /**
      * 확인용 초기 데이터 추가
      */
@@ -88,6 +91,10 @@ public class TestDataInit {
         participantService.participantPut(volunteerPost1.getId(), save.getId());
         participantService.participantPut(volunteerPost1.getId(), save3.getId());
         volunteerPostService.updateCurrentParticipantAmount(volunteerPost1.getId());
+
+        ReviewPost reviewPost = reviewPostService.savePost(new CreateReviewPostRequest("title", "deedede", category.getCategoryName(), post.getId()), save.getId());
+
+
 
 
 

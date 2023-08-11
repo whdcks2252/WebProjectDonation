@@ -17,19 +17,19 @@ public class CreateReviewPostRequest {
     @NotBlank
     private String categoryName;
     @NotNull
-    private String postTitle;
+    private Long postId;
 
-    public CreateReviewPostRequest(String title, String content, String categoryName, String postTitle) {
+    public CreateReviewPostRequest(String title, String content, String categoryName, Long postId) {
         this.title = title;
         this.content = content;
         this.categoryName = categoryName;
-        this.postTitle = postTitle;
+        this.postId = postId;
     }
 
-    public ReviewPost toEntity(Category categorie, Member member, Post post) {
+    public ReviewPost toEntity(Category categorie, Post post) {
         return ReviewPost.builder()
                 .title(this.title).content(this.content)
-                .categorie(categorie).member(member)
+                .categorie(categorie)
                 .post(post)
                 .build();
     }

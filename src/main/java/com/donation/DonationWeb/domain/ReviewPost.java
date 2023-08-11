@@ -41,24 +41,18 @@ public class ReviewPost extends ObjectTime{
     @JoinColumn(name = "category_id",nullable = false)
     private Category categorie;
 
-    //카테고리 연관관계 다대일 관계
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
-
-    @OneToMany(mappedBy = "review_post")
+    @OneToMany(mappedBy = "reviewPost")
     private List<Comment> commemts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review_post")
+    @OneToMany(mappedBy = "reviewPost")
     private List<InterestPost> interestPosts = new ArrayList<>();
 
     @Builder
-    public ReviewPost(String title, String content, Post post, Category categorie, Member member) {
+    public ReviewPost(String title, String content, Post post, Category categorie) {
         this.title = title;
         this.content = content;
         this.post = post;
         this.categorie = categorie;
-        this.member = member;
     }
 
     public void CategoryChangeAndUpdateValidate(UpdateReviewPostRequest request, Category categorie, Post post) {

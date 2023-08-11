@@ -15,6 +15,6 @@ public class UpdateReviewPostRequest {
     private String title;
     private String content;
     private String categoryName;
-    private String postTitle;
+    private Long postId;
 
 }
