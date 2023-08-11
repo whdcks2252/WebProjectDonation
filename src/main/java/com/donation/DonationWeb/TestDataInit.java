@@ -3,13 +3,18 @@ package com.donation.DonationWeb;
 import com.donation.DonationWeb.category.dto.AddCategoryRequest;
 import com.donation.DonationWeb.category.dto.UpdateCategoryRequest;
 import com.donation.DonationWeb.category.service.CategoryServiceImp;
+import com.donation.DonationWeb.comment.dto.AddCommentRequest;
+import com.donation.DonationWeb.comment.service.CommentService;
 import com.donation.DonationWeb.domain.*;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.service.MemberServiceImp;
+import com.donation.DonationWeb.participant.service.ParticipantService;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.post.dto.AddPostRequest;
 import com.donation.DonationWeb.post.service.PostServiceImp;
+import com.donation.DonationWeb.volunteerPost.dto.CreateVolunteerPostRequest;
+import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -27,6 +32,9 @@ public class TestDataInit {
     private final CategoryServiceImp categoryServiceImp;
     private final EntityManager em;
     private final MemberServiceImp memberServiceImp;
+    private final VolunteerPostService volunteerPostService;
+    private final ParticipantService participantService;
+    private final CommentService commentService;
     /**
      * 확인용 초기 데이터 추가
      */
@@ -72,6 +80,15 @@ public class TestDataInit {
         postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
         postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
         postRepository.savePost(new AddPostRequest("title2","gdgdggd", category.getCategoryName()),save3.getId());
+
+
+        VolunteerPost volunteerPost1 = volunteerPostService.savePost(new CreateVolunteerPostRequest("title1","gdgdg", category.getCategoryName(), 2), save.getId());
+        VolunteerPost volunteerPost2 = volunteerPostService.savePost(new CreateVolunteerPostRequest("title2","gdgdggd", category1.getCategoryName(),2),save3.getId());
+        VolunteerPost volunteerPost3 = volunteerPostService.savePost(new CreateVolunteerPostRequest("title2","gdgdggd", category.getCategoryName(),2),save3.getId());
+        participantService.participantPut(volunteerPost1.getId(), save.getId());
+        participantService.participantPut(volunteerPost1.getId(), save3.getId());
+        volunteerPostService.updateCurrentParticipantAmount(volunteerPost1.getId());
+
 
 
 
