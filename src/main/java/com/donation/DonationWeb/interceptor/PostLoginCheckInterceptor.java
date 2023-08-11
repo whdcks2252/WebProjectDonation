@@ -24,7 +24,7 @@ public class PostLoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         System.out.println(request.getMethod());
 
-        if(request.getMethod().equals("GET")){
+        if(request.getMethod().equals("GET")){ //GET으로 요청시 핸들러 실행
             return true;
         }
 

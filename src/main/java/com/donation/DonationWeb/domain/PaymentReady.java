@@ -1,6 +1,6 @@
 package com.donation.DonationWeb.domain;
 
-import com.donation.DonationWeb.kakaoPay.dto.DonationRequestDto;
+import com.donation.DonationWeb.kakaoPay.paymentReady.dto.DonationRequestDto;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoReadyResponse;
 import lombok.AccessLevel;
 import lombok.Builder;

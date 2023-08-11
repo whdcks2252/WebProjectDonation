@@ -1,12 +1,16 @@
 package com.donation.DonationWeb.kakaoPay.service;
 
-import com.donation.DonationWeb.domain.PaymentReady;
-import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.kakaoPay.dto.DonationRequestDto;
+import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.exception.KakaoPayException;
+import com.donation.DonationWeb.kakaoPay.paymentCancel.dto.PaymentCancelRequest;
+import com.donation.DonationWeb.kakaoPay.paymentCancel.service.PaymentCancelService;
+import com.donation.DonationWeb.kakaoPay.paymentReady.dto.DonationRequestDto;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoApproveResponse;
+import com.donation.DonationWeb.kakaoPay.dto.KakaoCancelResponse;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoReadyResponse;
 import com.donation.DonationWeb.kakaoPay.paymentApprove.service.PaymentApproveService;
 import com.donation.DonationWeb.kakaoPay.paymentReady.service.PaymentReadyService;
+import com.donation.DonationWeb.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,11 +33,15 @@ public class KakaoPayService {
     private  String admin_Key;
     private final PaymentReadyService paymentReadyService;
     private final PaymentApproveService paymentApproveService;
+    private final PaymentCancelService paymentCancelService;
+    private final PostService postService;
 
     /**
      * 결제 요청
      */
     public KakaoReadyResponse kakaoPayReady(DonationRequestDto donationRequestDto, Long postId, Long loginId) {
+        Post findPost = postService.findById(postId);
+        postVaildate(findPost);
 
         //카카오페이 요청 양식
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
@@ -96,6 +104,36 @@ public class KakaoPayService {
     }
 
     /**
+     * 결제 환불
+     */
+    public KakaoCancelResponse kakaoCancel(Long paymentId, Long loginId) {
+        PaymentApprove findPaymentApprove = paymentApproveService.findById(paymentId);
+        memberVaildate(findPaymentApprove.getMember(),loginId);// 로그인 회원 검증
+
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("cid", cid);
+        parameters.add("tid", findPaymentApprove.getTid());
+        parameters.add("cancel_amount", String.valueOf(findPaymentApprove.getPrice()));
+        parameters.add("cancel_tax_free_amount", String.valueOf(findPaymentApprove.getTax_free()));
+
+        // 파라미터, 헤더
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+
+        // 외부에 보낼 url
+        RestTemplate restTemplate = new RestTemplate();
+
+        KakaoCancelResponse cancelResponse = restTemplate.postForObject(
+                "https://kapi.kakao.com/v1/payment/cancel",
+                requestEntity,
+                KakaoCancelResponse.class);
+        paymentCancelService.save(cancelResponse,findPaymentApprove);
+        findPaymentApprove.getPost().updateCurrentAmount(-(cancelResponse.getCanceled_amount().getTotal()));
+        findPaymentApprove.paymentCancel();
+        return cancelResponse;
+
+    }
+
+    /**
      * 카카오 요구 헤더값
      */
     private HttpHeaders getHeaders() {
@@ -107,6 +145,19 @@ public class KakaoPayService {
         httpHeaders.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
         return httpHeaders;
+    }
+    private void memberVaildate(Member member,Long loginId){
+        if(!member.getId().equals(loginId)){
+
+            throw new KakaoPayException("잘못된 접근입니다. loginId" + loginId);
+        }
+
+    }
+
+    private void postVaildate(Post post) {
+        if(post.getPostStatus().equals(PostStatus.EXPIRATION)){
+            throw new KakaoPayException("만료된 기부게시물 입니다 postId: " + post.getId());
+        }
     }
 
 }

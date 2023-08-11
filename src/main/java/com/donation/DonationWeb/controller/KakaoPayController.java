@@ -2,8 +2,9 @@ package com.donation.DonationWeb.controller;
 
 import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.exception.KakaoPayException;
-import com.donation.DonationWeb.kakaoPay.dto.DonationRequestDto;
+import com.donation.DonationWeb.kakaoPay.paymentReady.dto.DonationRequestDto;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoApproveResponse;
+import com.donation.DonationWeb.kakaoPay.dto.KakaoCancelResponse;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoReadyResponse;
 import com.donation.DonationWeb.kakaoPay.service.KakaoPayService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class KakaoPayController {
      * 결제 성공
      */
     @GetMapping ("/success")
-    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken,@RequestParam Long postId,@RequestParam Long loginId,@RequestParam String donationUUID) {
+    public Object afterPayRequest(@RequestParam("pg_token") String pgToken,@RequestParam Long postId,@RequestParam Long loginId,@RequestParam String donationUUID) {
 
         KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken,postId,loginId,donationUUID);
 
@@ -55,6 +56,17 @@ public class KakaoPayController {
     public void fail() {
 
         throw new KakaoPayException("결제 실패");
+    }
+
+    /**
+     * 환불
+     */
+    @PostMapping("/refund/{paymentId}")
+    public Object refund(@PathVariable Long paymentId, @Login Long loginId) {
+
+        KakaoCancelResponse kakaoCancelResponse = kakaoPayService.kakaoCancel(paymentId,loginId);
+
+        return new ResponseEntity<>(kakaoCancelResponse, HttpStatus.OK);
     }
 
 }

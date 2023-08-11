@@ -1,4 +1,4 @@
-package com.donation.DonationWeb.kakaoPay.dto;
+package com.donation.DonationWeb.kakaoPay.paymentReady.dto;
 
 import lombok.Getter;
 

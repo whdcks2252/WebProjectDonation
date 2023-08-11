@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class PaymentApprove {
 
     @Builder
-    public PaymentApprove(String donationUUID, String tid, String cid, LocalDateTime created_at, LocalDateTime approved_at, Integer price, Integer tax_free, Member member, Post post) {
+    public PaymentApprove(String donationUUID, String tid, String cid, LocalDateTime created_at, LocalDateTime approved_at, Integer price, Integer tax_free, Member member, Post post,CancelStatus cancelStatus) {
         this.donationUUID = donationUUID;
         this.tid = tid;
         this.cid = cid;
@@ -25,6 +25,7 @@ public class PaymentApprove {
         this.tax_free = tax_free;
         this.member = member;
         this.post = post;
+        this.cancelStatus = cancelStatus;
     }
 
     @Id
@@ -40,6 +41,8 @@ public class PaymentApprove {
     private Integer price;// 총액
     private Integer tax_free; // 비과세 금액
 
+    @Enumerated(EnumType.STRING)
+    private CancelStatus cancelStatus;//환불 상태
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "member_num",nullable = false)
@@ -61,7 +64,11 @@ public class PaymentApprove {
                 .tax_free(kakaoApproveResponse.getAmount().getTax_free())
                 .member(member)
                 .post(post)
+                .cancelStatus(CancelStatus.PROCESS)
                 .build();
+    }
+    public  void paymentCancel(){
+        this.cancelStatus = CancelStatus.CANCEL;
     }
 
 }
