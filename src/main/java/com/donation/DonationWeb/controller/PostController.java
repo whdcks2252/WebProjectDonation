@@ -22,9 +22,9 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public Object createPost(@RequestBody @Validated AddPostRequest addPostRequest, @Login Long id) {
-        log.info("id={}",id);
-        return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,id)),HttpStatus.CREATED);
+    public Object createPost(@RequestBody @Validated AddPostRequest addPostRequest, @Login Long loginId) {
+        log.info("id={}",loginId);
+        return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,loginId)),HttpStatus.CREATED);
     }
 
     @GetMapping("/{postId}")
@@ -48,15 +48,15 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
-    public Object postUpdate(@PathVariable(name = "id") Long postid,@RequestBody @Validated UpdatePostRequest updatePostRequest, @Login  Long loginId) {
+    public Object postUpdate(@PathVariable(name = "id") Long postid,@RequestBody @Validated UpdatePostRequest updatePostRequest, @Login Long loginId) {
             postService.updatePost(updatePostRequest,postid,loginId);
         // Lazy n+1문제 때문에 findByIdLeftJoin 호출
         return PostResponse.createInstance(postService.findByIdLeftJoin(postid));
     }
 
     @DeleteMapping("/{id}")
-    public Object postDelete(@PathVariable(name = "id") Long postId, @Login Long id) {
-            postService.delete(postId,id);
+    public Object postDelete(@PathVariable(name = "id") Long postId, @Login Long loginId) {
+            postService.delete(postId,loginId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
