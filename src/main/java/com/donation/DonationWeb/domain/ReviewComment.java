@@ -8,35 +8,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
-import java.util.List;
 
-//댓글
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-public class Comment extends ObjectTime{
+public class ReviewComment extends ObjectTime{
     @Id
     @GeneratedValue
-    @Column(name="comment_num")
+    @Column(name="review_comment_num")
     private Long id;
 
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_num",nullable = false)
-    private Post post;
+    @JoinColumn(name = "review_num",nullable = false)
+    private ReviewPost reviewPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Builder
-    public Comment(String content, Post post, Member member) {
+    public ReviewComment(String content, Member member, ReviewPost reviewPost) {
         this.content = content;
-        this.post = post;
+        this.reviewPost = reviewPost;
         this.member = member;
-
     }
 
     public void updateComment(String content) {
@@ -49,5 +46,4 @@ public class Comment extends ObjectTime{
         }
 
     }
-
 }

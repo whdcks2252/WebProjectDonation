@@ -47,7 +47,8 @@ public class CategoryRepositoryImp implements CategoryRepository {
 
     @Override
     public Optional<Category> findByName(String categoryName) {
-        return em.createQuery("select c from Category c where c.CategoryName= :Category_name").
+        return em.createQuery("select c from Category c " +
+                        "where c.CategoryName= :Category_name",Category.class).
                 setParameter("Category_name", categoryName).getResultStream().findAny();
 
     }

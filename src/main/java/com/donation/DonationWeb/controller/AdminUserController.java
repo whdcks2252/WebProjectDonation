@@ -37,7 +37,7 @@ import static com.donation.DonationWeb.status.statusCode.RESPONSE_OK;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 @Slf4j
 public class AdminUserController {
 

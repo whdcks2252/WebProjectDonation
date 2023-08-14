@@ -13,25 +13,24 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-public class InterestPost extends ObjectTime{
+public class InterestVolunteerPost extends ObjectTime{
 
     @Id
     @GeneratedValue
-    @Column(name="post_inter_num")
+    @Column(name="volunteerPost_inter_num")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_num",nullable = false)
-    private Post post;
+    @JoinColumn(name = "volunteer_num",nullable = false)
+    private VolunteerPost volunteerPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Builder
-    public InterestPost(Post post, Member member) {
-
-        this.post = post;
+    public InterestVolunteerPost(Member member, VolunteerPost volunteerPost) {
+        this.volunteerPost = volunteerPost;
         this.member = member;
     }
 }

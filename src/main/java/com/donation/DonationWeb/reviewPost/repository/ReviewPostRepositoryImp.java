@@ -38,7 +38,7 @@ public class ReviewPostRepositoryImp implements ReviewPostRepository{
                         " join fetch r.categorie c" +
                         " join fetch r.post p" +
                         " join fetch p.member m" +
-                        " left join fetch r.commemts co" +
+                        " left join fetch r.reviewComments co" +
                         " where r.id=:reviewPostId ", ReviewPost.class) //레프트 조인해도 postId 값을 주니까 괜찮음
                 .setParameter("reviewPostId", reviewPostId).getResultList().stream().findAny();
     }

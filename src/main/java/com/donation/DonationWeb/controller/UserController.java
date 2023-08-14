@@ -2,12 +2,15 @@ package com.donation.DonationWeb.controller;
 
 
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.VolunteerPost;
 import com.donation.DonationWeb.exception.LoginException;
 import com.donation.DonationWeb.login.dto.LoginResponse;
 import com.donation.DonationWeb.login.service.LoginService;
 import com.donation.DonationWeb.member.dto.*;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.service.MemberService;
+import com.donation.DonationWeb.reviewPost.service.ReviewPostService;
+import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,8 @@ import static com.donation.DonationWeb.status.statusCode.RESPONSE_OK;
 @Slf4j
 public class UserController {
     private final MemberService memberService;
+    private final VolunteerPostService volunteerPostService;
+    private final ReviewPostService reviewPostService;
     private final LoginService loginService;
 
     @PostMapping("/join")

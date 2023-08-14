@@ -30,7 +30,7 @@ public class ReviewPostResponse {
     public static ReviewPostResponse createInstance(ReviewPost reviewPost) {
         return new ReviewPostResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getContent(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getId(),
                 reviewPost.getPost().getMember().getMemberId(), reviewPost.getPost().getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime(),
-                reviewPost.getCommemts().stream().
+                reviewPost.getReviewComments().stream().
                         map(comment -> ReviewPostResponse.CommentDto.builder().content(comment.getContent()).commentId(comment.getId())
                                 .memberId(comment.getMember().getMemberId())
                                 .updateTime(comment.getUpdateTime()).build()).collect(Collectors.toList())

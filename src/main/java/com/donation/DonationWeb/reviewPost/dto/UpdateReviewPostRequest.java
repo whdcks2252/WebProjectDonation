@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class UpdateReviewPostRequest {
     private String title;
     private String content;
-    private String categoryName;
+    private Long categoryNum;
     private Long postId;
 
 }

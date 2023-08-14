@@ -62,9 +62,16 @@ public class ReviewPostServiceImp implements ReviewPostService{
         ReviewPost findReviewPost = findById(reviewPostId);
 
         if (postMemberValidation(findReviewPost, loginId)) {
-            Category findCategory = categoryService.findByName(request.getCategoryName());
-            Post findpost = postService.findById(request.getPostId());
-            reviewPostRepository.update(request,findReviewPost,findCategory,findpost);
+            if (postMemberValidation(findReviewPost, loginId)) {
+                if(categoryExist(request.getCategoryNum())){
+                    Category findCategory = categoryService.findById(request.getCategoryNum());
+                    reviewPostRepository.update(request,findReviewPost,findCategory,findReviewPost.getPost());
+                }else
+                    reviewPostRepository.update(request,findReviewPost,null,findReviewPost.getPost());
+            }
+            else {
+                throw new PostException("업데이트가 실패 하였습니다");
+            }
         }
         else {
             throw new PostException("업데이트가 실패 하였습니다");
@@ -89,6 +96,14 @@ public class ReviewPostServiceImp implements ReviewPostService{
         Member findByLoginId = memberService.findById(loginId);
 
         if(findByLoginId.getId()==reviewPost.getPost().getMember().getId() ){
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean categoryExist(Long categoryId) {//카테고리 변경
+        if (categoryId!=null){
             return true;
         }
 

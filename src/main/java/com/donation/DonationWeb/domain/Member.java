@@ -58,6 +58,9 @@ public class Member extends ObjectTime {
     private List<InterestPost> interestPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    private List<InterestVolunteerPost> interestVolunteerPosts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")

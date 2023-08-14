@@ -42,10 +42,7 @@ public class ReviewPost extends ObjectTime{
     private Category categorie;
 
     @OneToMany(mappedBy = "reviewPost")
-    private List<Comment> commemts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "reviewPost")
-    private List<InterestPost> interestPosts = new ArrayList<>();
+    private List<ReviewComment> reviewComments = new ArrayList<>();
 
     @Builder
     public ReviewPost(String title, String content, Post post, Category categorie) {

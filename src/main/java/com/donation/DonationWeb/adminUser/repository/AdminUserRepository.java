@@ -10,4 +10,7 @@ public interface AdminUserRepository {
     Optional<AdminUser> findByAdminUserId(String adminUserId);
 
 
+    Optional<AdminUser> findById(Long adminId);
+
+    AdminUser save(AdminUser adminUser);
 }

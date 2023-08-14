@@ -1,10 +1,13 @@
 package com.donation.DonationWeb.interceptor;
 
+import com.donation.DonationWeb.adminUser.service.AdminUserService;
 import com.donation.DonationWeb.login.session.SessionConst;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Source;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +18,8 @@ import java.util.Map;
 public class AdminLoginCheckInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Resource
+    private AdminUserService adminUserService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -24,7 +29,7 @@ public class AdminLoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
 
-        if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
+        if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null || adminUserService.findById((Long) session.getAttribute(SessionConst.LOGIN_MEMBER)) == null) {
             log.info("미인증 사용자 요청");
             Map<String, String> errorResult = new HashMap<>();
             errorResult.put("message", "미인증 사용자 요청");

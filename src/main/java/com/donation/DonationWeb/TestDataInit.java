@@ -1,5 +1,7 @@
 package com.donation.DonationWeb;
 
+import com.donation.DonationWeb.adminUser.dto.CreateAdminUserRequest;
+import com.donation.DonationWeb.adminUser.service.AdminUserService;
 import com.donation.DonationWeb.category.dto.AddCategoryRequest;
 import com.donation.DonationWeb.category.dto.UpdateCategoryRequest;
 import com.donation.DonationWeb.category.service.CategoryServiceImp;
@@ -38,6 +40,7 @@ public class TestDataInit {
     private final ParticipantService participantService;
     private final CommentService commentService;
     private final ReviewPostService reviewPostService;
+    private final AdminUserService adminUserService;
     /**
      * 확인용 초기 데이터 추가
      */
@@ -93,6 +96,9 @@ public class TestDataInit {
         volunteerPostService.updateCurrentParticipantAmount(volunteerPost1.getId());
 
         ReviewPost reviewPost = reviewPostService.savePost(new CreateReviewPostRequest("title", "deedede", category.getCategoryName(), post.getId()), save.getId());
+        AdminUser adminUser = adminUserService.save(new CreateAdminUserRequest("chooh1010", "1234", "admin"));
+
+
 
 
 

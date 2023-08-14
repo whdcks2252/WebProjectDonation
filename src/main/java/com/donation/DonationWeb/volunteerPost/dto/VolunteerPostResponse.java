@@ -36,7 +36,7 @@ public class VolunteerPostResponse {
     public static VolunteerPostResponse createInstance(VolunteerPost volunteerPost) {
         return new VolunteerPostResponse(volunteerPost.getId(), volunteerPost.getTitle(), volunteerPost.getContent(), volunteerPost.getCategorie().getCategoryName(), volunteerPost.getCategorie().getId(), volunteerPost.getPostStatus(),
                 volunteerPost.getMember().getMemberId(), volunteerPost.getMember().getMemberNickname(), volunteerPost.getNeedAmount(), volunteerPost.getCurrentParticipantAmount(), volunteerPost.getCreateTime(), volunteerPost.getUpdateTime(),
-                volunteerPost.getCommemts().stream().
+                volunteerPost.getVolunteerComments().stream().
                         map(comment -> CommentDto.builder().content(comment.getContent()).commentId(comment.getId())
                                 .memberId(comment.getMember().getMemberId())
                                 .updateTime(comment.getUpdateTime()).build()).collect(Collectors.toList())

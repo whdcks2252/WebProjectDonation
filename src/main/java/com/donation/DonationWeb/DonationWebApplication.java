@@ -1,5 +1,6 @@
 package com.donation.DonationWeb;
 
+import com.donation.DonationWeb.adminUser.service.AdminUserServiceImp;
 import com.donation.DonationWeb.category.service.CategoryServiceImp;
 import com.donation.DonationWeb.comment.service.CommentService;
 import com.donation.DonationWeb.comment.service.CommentServiceImp;
@@ -27,7 +28,7 @@ public class DonationWebApplication {
 		}
 	@Bean
 	@Profile("local")
-	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp, MemberServiceImp memberServiceImp, VolunteerPostServiceImp volunteerPostServiceImp, ParticipantServiceImp participantServiceImp, CommentServiceImp commentServiceImp, ReviewPostServiceImp reviewPostServiceImp) {
-		return new TestDataInit(itemRepository,categoryServiceImp,em,memberServiceImp,volunteerPostServiceImp, participantServiceImp, commentServiceImp, reviewPostServiceImp);
+	public TestDataInit testDataInit(PostServiceImp itemRepository, EntityManager em, CategoryServiceImp categoryServiceImp, MemberServiceImp memberServiceImp, VolunteerPostServiceImp volunteerPostServiceImp, ParticipantServiceImp participantServiceImp, CommentServiceImp commentServiceImp, ReviewPostServiceImp reviewPostServiceImp, AdminUserServiceImp adminUserServiceImp) {
+		return new TestDataInit(itemRepository,categoryServiceImp,em,memberServiceImp,volunteerPostServiceImp, participantServiceImp, commentServiceImp, reviewPostServiceImp, adminUserServiceImp);
 	}
 }

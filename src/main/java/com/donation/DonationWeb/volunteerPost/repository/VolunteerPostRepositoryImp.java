@@ -37,7 +37,7 @@ public class VolunteerPostRepositoryImp implements VolunteerPostRepository{
         return em.createQuery("select v from VolunteerPost v" +
                         " join fetch v.member m" +
                         " join fetch v.categorie c" +
-                        " left join fetch v.commemts co" +
+                        " left join fetch v.volunteerComments co" +
                         " where v.id=:volunteerPostId ", VolunteerPost.class) //레프트 조인해도 postId 값을 주니까 괜찮음
                 .setParameter("volunteerPostId", volunteerPostId).getResultList().stream().findAny();
     }

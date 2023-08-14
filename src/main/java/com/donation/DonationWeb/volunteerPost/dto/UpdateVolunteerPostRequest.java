@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class UpdateVolunteerPostRequest {
     private String title;
     private String content;
-    private String categoryName;
+    private Long categoryNum;
     private PostStatus postStatus;
     private Integer needAmount;
 }
