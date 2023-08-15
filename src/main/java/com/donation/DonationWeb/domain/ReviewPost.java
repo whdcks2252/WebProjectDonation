@@ -33,12 +33,12 @@ public class ReviewPost extends ObjectTime{
     private String content;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_num")
+    @JoinColumn(name = "post_num",foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Post post;
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category categorie;
 
     @OneToMany(mappedBy = "reviewPost")

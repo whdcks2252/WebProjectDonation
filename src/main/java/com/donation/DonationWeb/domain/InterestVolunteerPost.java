@@ -21,11 +21,11 @@ public class InterestVolunteerPost extends ObjectTime{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "volunteer_num",nullable = false)
+    @JoinColumn(name = "volunteer_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private VolunteerPost volunteerPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @Builder

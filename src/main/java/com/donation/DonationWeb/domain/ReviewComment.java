@@ -22,11 +22,11 @@ public class ReviewComment extends ObjectTime{
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_num",nullable = false)
+    @JoinColumn(name = "review_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ReviewPost reviewPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @Builder

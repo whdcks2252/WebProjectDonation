@@ -84,7 +84,7 @@ public class AdminUserController {
         return PostResponse.createInstance(postService.findByIdLeftJoin(postId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
-    @GetMapping("/posts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    @GetMapping("/posts/list/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
     public Object findByCategry(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
         List<Post> findPosts = postService.findByCategry(name, page);
         List<PostListResponse> collect = findPosts.stream().map((m) -> PostListResponse.createInstance(m)).collect(Collectors.toList());
@@ -112,7 +112,7 @@ public class AdminUserController {
         return VolunteerPostResponse.createInstance(volunteerPostService.findByIdLeftJoin(volunteerPostId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
-    @GetMapping("/volunteerPosts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    @GetMapping("/volunteerPosts/list/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
     public Object findVolunteerPostsByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
         List<VolunteerPost> findPosts = volunteerPostService.findByCategory(name, page);
         List<VolunteerPostListResponse> collect = findPosts.stream().map((m) -> VolunteerPostListResponse.createInstance(m)).collect(Collectors.toList());
@@ -147,7 +147,7 @@ public class AdminUserController {
         return ReviewPostResponse.createInstance(reviewPostService.findByIdLeftJoin(reviewPostId));    // Lazy n+1문제 때문에 findByIdLeftJoin 호출
     }
 
-    @GetMapping("/reviewPosts/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
+    @GetMapping("/reviewPosts/list/{categoryName}") //조회는 시간순으로 카테고리 이름으로 페이징 조회 10개씩
     public Object findReviewPostsByCategory(@PathVariable(name = "categoryName") String name,@RequestParam(defaultValue="1") Integer page) {
         List<ReviewPost> findPosts = reviewPostService.findByCategory(name, page);
         List<ReviewPostListResponse> collect = findPosts.stream().map((m) -> ReviewPostListResponse.createInstance(m)).collect(Collectors.toList());
