@@ -1,8 +1,8 @@
 package com.donation.DonationWeb.kakaoPay.service;
 
 import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.status.PostStatus;
 import com.donation.DonationWeb.exception.KakaoPayException;
-import com.donation.DonationWeb.kakaoPay.paymentCancel.dto.PaymentCancelRequest;
 import com.donation.DonationWeb.kakaoPay.paymentCancel.service.PaymentCancelService;
 import com.donation.DonationWeb.kakaoPay.paymentReady.dto.DonationRequestDto;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoApproveResponse;
@@ -98,8 +98,7 @@ public class KakaoPayService {
                 KakaoApproveResponse.class);
         Post findPost = findPaymentReady.getPost();
         paymentApproveService.save(approveResponse, findPost, findPaymentReady.getMember());
-        findPost.updateCurrentAmount(approveResponse.getAmount().getTotal());
-
+        postService.updateCurrentAmount(postId,approveResponse.getAmount().getTotal());
         return approveResponse;
     }
 
@@ -127,7 +126,8 @@ public class KakaoPayService {
                 requestEntity,
                 KakaoCancelResponse.class);
         paymentCancelService.save(cancelResponse,findPaymentApprove);
-        findPaymentApprove.getPost().updateCurrentAmount(-(cancelResponse.getCanceled_amount().getTotal()));
+        Post findPost = findPaymentApprove.getPost();
+        postService.updateCurrentAmount(findPost.getId(),-(cancelResponse.getAmount().getTotal()));
         findPaymentApprove.paymentCancel();
         return cancelResponse;
 

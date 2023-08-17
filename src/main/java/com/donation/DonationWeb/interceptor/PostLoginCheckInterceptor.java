@@ -19,7 +19,7 @@ public class PostLoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
-        log.info("MethodLoginCheckInterceptor 인증 체크 인터셉터 실행  {}", requestURI);
+        log.info("PostLoginCheckInterceptor 인증 체크 인터셉터 실행  {}", requestURI);
         log.info("http메서드={}", request.getMethod());
         HttpSession session = request.getSession();
         System.out.println(request.getMethod());

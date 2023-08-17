@@ -6,6 +6,7 @@ import com.donation.DonationWeb.category.service.CategoryServiceImp;
 import com.donation.DonationWeb.comment.dto.AddCommentRequest;
 import com.donation.DonationWeb.comment.service.CommentService;
 import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.status.ServiceAgreement;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import com.donation.DonationWeb.member.service.MemberServiceImp;
@@ -45,7 +46,7 @@ public class TestDataInit {
 
         Member save = memberServiceImp.save(new AddMemberRequest
                 ("whdcks1", "ㅎㅇㅎㅇ", "123123", "원종찬", "01044444444", "sadasdasdas",
-                        "seoul","boroad","123",ServiceAgreement.YES));
+                        "seoul","boroad","123", ServiceAgreement.YES));
         Member save2 = memberServiceImp.save(new AddMemberRequest
                 ("whdcks2", "ㅎㅇㅎㅇ", "123123", "원종찬",
                         "01044444444", "sadasdasdas","seoul","boroad","123",ServiceAgreement.YES));

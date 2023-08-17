@@ -27,4 +27,6 @@ public interface PostService {
     public void updatePost( UpdatePostRequest upPost,Long postId,Long loginId) ;
 
     public void delete(Long postId,Long LoginId);
+
+    public void updateCurrentAmount(Long postId, Integer price);
 }

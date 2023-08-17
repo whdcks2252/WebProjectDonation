@@ -1,12 +1,13 @@
-package com.donation.DonationWeb.domain;
+package com.donation.DonationWeb.domain.status;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum CancelStatus {
-    CANCEL("cancel"),
-    PROCESS("process");
+public enum MemberAuthorityRequestProcess {
+    APPROVE ("approve"),
+    WAIT("wait"),
+    REJECT("reject");
 
     /**
      *  enum 소문자로 쓰기위한 로직 직렬화 역직렬화
@@ -15,13 +16,13 @@ public enum CancelStatus {
     @Getter
     private final String value;
 
-    CancelStatus(String value) {
+    MemberAuthorityRequestProcess(String value) {
         this.value = value;
     }
 
     @JsonCreator
-    public static ServiceAgreement from(String value) {
-        for (ServiceAgreement status : ServiceAgreement.values()) {
+    public static MemberAuthorityRequestProcess from(String value) {
+        for (MemberAuthorityRequestProcess status : MemberAuthorityRequestProcess.values()) {
             if (status.getValue().equals(value)) {
                 return status;
             }
@@ -33,4 +34,5 @@ public enum CancelStatus {
     public String getValue() {
         return value;
     }
-    }
+}
+

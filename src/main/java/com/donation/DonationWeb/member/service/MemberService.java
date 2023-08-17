@@ -1,9 +1,6 @@
 package com.donation.DonationWeb.member.service;
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.domain.ServiceAgreement;
-import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.member.dto.AddMemberRequest;
 import com.donation.DonationWeb.member.dto.IdCheckRequest;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;

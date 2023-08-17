@@ -1,23 +1,27 @@
-package com.donation.DonationWeb.domain;
+package com.donation.DonationWeb.domain.status;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum ServiceAgreement {
-    YES("yes"),NO("no");
-    //소문자 yes나 no를 받아야 함
+public enum PostStatus {
+    PROCESS("process"),
+    EXPIRATION("expiration");
+
+    /**
+     *  enum 소문자로 쓰기위한 로직 직렬화 역직렬화
+     */
 
     @Getter
     private final String value;
 
-    ServiceAgreement(String value) {
+    PostStatus(String value) {
         this.value = value;
     }
 
     @JsonCreator
-    public static ServiceAgreement from(String value) {
-        for (ServiceAgreement status : ServiceAgreement.values()) {
+    public static PostStatus from(String value) {
+        for (PostStatus status : PostStatus.values()) {
             if (status.getValue().equals(value)) {
                 return status;
             }
@@ -29,4 +33,4 @@ public enum ServiceAgreement {
     public String getValue() {
         return value;
     }
-}
+    }

@@ -1,5 +1,7 @@
 package com.donation.DonationWeb.domain;
 
+import com.donation.DonationWeb.domain.status.MemberRole;
+import com.donation.DonationWeb.domain.status.ServiceAgreement;
 import com.donation.DonationWeb.member.dto.MemberUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,20 +22,21 @@ import java.util.List;
 public class Member extends ObjectTime {
 
     @Builder
-    public Member(String memberId,String password, String memberNickname, String memberName, String memberPhone,String email,ServiceAgreement svcAge,Address address ) {
+    public Member(String memberId, String password, String memberNickname, String memberName, String memberPhone, String email, ServiceAgreement svcAge, Address address,MemberRole memberRole) {
         this.memberId = memberId;
         this.password = password;
         this.memberNickname = memberNickname;
-        this.memberName=memberName;
+        this.memberName = memberName;
         this.memberPhone = memberPhone;
         this.email = email;
-        this.svcAge=svcAge;
+        this.svcAge = svcAge;
         this.address = address;
+        this.memberRole = memberRole;
     }
 
     @Id
     @GeneratedValue
-    @Column(name="member_num")
+    @Column(name = "member_num")
     private Long id;
     //멤버 아이디
     @Column(name = "member_id")
@@ -73,26 +76,34 @@ public class Member extends ObjectTime {
     @Embedded
     private Address address;
 
-
     //서비스 이용약관
     @Enumerated(EnumType.STRING)
     private ServiceAgreement svcAge;
 
-    //업데이트
-    public   void updateValidate(MemberUpdateDto memberUpdateDto) {
-            if(ObjectUtils.isEmpty(memberUpdateDto))
-                throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
-            if (memberUpdateDto.getMemberNickname() != null)
-                this.memberNickname = memberUpdateDto.getMemberNickname();
-            if (memberUpdateDto.getMemberPhone() != null)
-                this.memberPhone = memberUpdateDto.getMemberPhone();
-            if (memberUpdateDto.getEmail() != null)
-                this.email = memberUpdateDto.getEmail();
-            if (memberUpdateDto.getCity() != null)
-                if (memberUpdateDto.getStreet() != null)
-                    if (memberUpdateDto.getStreet() != null)
-                        this.address = new Address(memberUpdateDto.getCity(), memberUpdateDto.getStreet(), memberUpdateDto.getZipcode());
-                                    }
+    //기부게시물 작성가능여부
+    @Enumerated(EnumType.STRING)
+    private MemberRole memberRole;
 
+
+
+    //업데이트
+    public void updateValidate(MemberUpdateDto memberUpdateDto) {
+        if (ObjectUtils.isEmpty(memberUpdateDto))
+            throw new IllegalArgumentException("요청 파라미터가 NULL입니다.");
+        if (memberUpdateDto.getMemberNickname() != null)
+            this.memberNickname = memberUpdateDto.getMemberNickname();
+        if (memberUpdateDto.getMemberPhone() != null)
+            this.memberPhone = memberUpdateDto.getMemberPhone();
+        if (memberUpdateDto.getEmail() != null)
+            this.email = memberUpdateDto.getEmail();
+        if (memberUpdateDto.getCity() != null)
+            if (memberUpdateDto.getStreet() != null)
+                if (memberUpdateDto.getZipcode() != null)
+                    this.address = new Address(memberUpdateDto.getCity(), memberUpdateDto.getStreet(), memberUpdateDto.getZipcode());
+    }
+    //멤버 권한 변경
+    public void updateMemberAuth(){
+        this.memberRole = MemberRole.AUTHORIZED;
+    }
 
 }

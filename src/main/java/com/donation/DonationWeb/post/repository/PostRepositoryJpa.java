@@ -5,9 +5,11 @@ import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,13 @@ public class PostRepositoryJpa implements PostRepository {
         Post post = em.find(Post.class, postId);
         return Optional.ofNullable(post);
 
+    }
+
+    @Override
+    public Optional<Post> findByIdLock(Long postId) {
+        Post post = em.find(Post.class, postId,LockModeType.PESSIMISTIC_WRITE);
+
+        return Optional.ofNullable(post);
     }
 
 

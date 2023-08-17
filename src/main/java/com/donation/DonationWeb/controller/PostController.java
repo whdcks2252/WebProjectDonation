@@ -23,7 +23,6 @@ public class PostController {
 
     @PostMapping
     public Object createPost(@RequestBody @Validated AddPostRequest addPostRequest, @Login Long loginId) {
-        log.info("id={}",loginId);
         return new ResponseEntity<>(AddPostResponse.createInstance(postService.savePost(addPostRequest,loginId)),HttpStatus.CREATED);
     }
 

@@ -1,6 +1,5 @@
 package com.donation.DonationWeb.interceptor;
 
-import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.login.session.SessionConst;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

@@ -4,7 +4,10 @@ import com.donation.DonationWeb.argumentresolver.LoginMemberIdArgumentResolver;
 import com.donation.DonationWeb.filter.CorsFilter;
 import com.donation.DonationWeb.interceptor.CheckUserAccessInterceptor;
 import com.donation.DonationWeb.interceptor.LoginCheckInterceptor;
+import com.donation.DonationWeb.interceptor.MemberRoleCheckInterceptor;
 import com.donation.DonationWeb.interceptor.PostLoginCheckInterceptor;
+import com.donation.DonationWeb.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,40 +22,49 @@ import javax.servlet.Filter;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-
+    private final MemberService memberService;
     //인터셉터 등록
     @Override
+
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns( "/api/user/*","/kakaopay/**")
-                .excludePathPatterns("/api/user/login", "/api/user/join", "/api/user/idCheck", "/api/user/nickNameCheck");
+                .addPathPatterns("/api/user/*", "/kakaopay/**")
+                .excludePathPatterns("/api/user/login", "/api/user/join", "/api/user/idCheck", "/api/user/nickNameCheck", "/kakaopay/success");
         registry.addInterceptor(new CheckUserAccessInterceptor())
-                .order(3)
+                .order(4)
                 .addPathPatterns("/api/user/{id}/**").excludePathPatterns("/api/user/idCheck", "/api/user/nickNameCheck", "/api/user/logout", "/api/user/login", "/api/user/join");
         registry.addInterceptor(new PostLoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/api/post/**");
+        registry.addInterceptor(memberRoleCheckInterceptor())
+                .order(3)
+                .addPathPatterns("/api/post");
 
 
     }
+
     //argumentResolvers등록
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberIdArgumentResolver());
 
     }
-   //cros 메서드
+
+    //cros 메서드
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("http://localhost:9090");
+        registry.addMapping("/**").allowedOrigins("http://localhost:9090", "http://localhost:3030")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowCredentials(true);
     }
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE) //빈의 우선 순위 저장 우선순위 1순위
-    public FilterRegistrationBean crosFilter(){
+    public FilterRegistrationBean crosFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new CorsFilter());
         filterRegistrationBean.setOrder(1);
@@ -60,6 +72,10 @@ public class WebConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
+    @Bean// MemberRoleInterceptor 빈등록
+    public MemberRoleCheckInterceptor memberRoleCheckInterceptor() {
+        return new MemberRoleCheckInterceptor(memberService);
+    }
 }
 
 

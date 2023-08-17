@@ -27,12 +27,6 @@ public class CommentController {
         return new ResponseEntity<>(CommentResponse.createInstance(comment), HttpStatus.CREATED);
 
     }
-    @PostMapping("/{commentId}")
-    public Object createNestedComment(@PathVariable Long commentId,@RequestBody @Validated AddCommentRequest addCommentRequest, @Login Long loginId) {
-        Comment comment = commentService.createNestedComment(addCommentRequest,commentId,loginId);
-        return new ResponseEntity<>(NestedCommentResponse.createInstance(comment), HttpStatus.CREATED);
-
-    }
 
     @PatchMapping("/{commentId}")
     public Object updateComment(@PathVariable Long commentId, @RequestBody UpdateCommentRequest updateCommentRequest, @Login Long loginId) {

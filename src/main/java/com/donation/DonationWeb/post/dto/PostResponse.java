@@ -1,14 +1,10 @@
 package com.donation.DonationWeb.post.dto;
 
-import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.domain.PostStatus;
-import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.domain.status.PostStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;

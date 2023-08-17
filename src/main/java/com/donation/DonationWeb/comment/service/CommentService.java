@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CommentService {
     Comment save(AddCommentRequest addComment, Long loginId, Long postId);
-    Comment createNestedComment(AddCommentRequest addComment,Long commentId, Long loginId);
 
     void delete(Long commentId,Long loginId);
 

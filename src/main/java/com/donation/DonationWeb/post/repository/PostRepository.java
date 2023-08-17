@@ -5,7 +5,9 @@ import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.post.dto.PostResponse;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
+import org.springframework.data.jpa.repository.Lock;
 
+import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,7 @@ public interface PostRepository {
 
     Optional<Post> findById(Long postId);
 
+    Optional<Post> findByIdLock(Long postId);
 
     Optional<Post> findByIdLeftJoin(Long postId);
 
