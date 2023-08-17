@@ -33,32 +33,23 @@ public class ReviewPost extends ObjectTime{
     private String content;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_num")
+    @JoinColumn(name = "post_num",foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Post post;
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category categorie;
 
-    //카테고리 연관관계 다대일 관계
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
-
-    @OneToMany(mappedBy = "review_post")
-    private List<Comment> commemts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "review_post")
-    private List<InterestPost> interestPosts = new ArrayList<>();
+    @OneToMany(mappedBy = "reviewPost")
+    private List<ReviewComment> reviewComments = new ArrayList<>();
 
     @Builder
-    public ReviewPost(String title, String content, Post post, Category categorie, Member member) {
+    public ReviewPost(String title, String content, Post post, Category categorie) {
         this.title = title;
         this.content = content;
         this.post = post;
         this.categorie = categorie;
-        this.member = member;
     }
 
     public void CategoryChangeAndUpdateValidate(UpdateReviewPostRequest request, Category categorie, Post post) {
@@ -79,3 +70,4 @@ public class ReviewPost extends ObjectTime{
 
     }
 }
+

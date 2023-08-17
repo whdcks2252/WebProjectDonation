@@ -1,21 +1,20 @@
 package com.donation.DonationWeb.volunteerPost.service;
 
 import com.donation.DonationWeb.category.service.CategoryService;
-import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.Category;
+import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.VolunteerPost;
 import com.donation.DonationWeb.exception.PostException;
 import com.donation.DonationWeb.member.service.MemberService;
 import com.donation.DonationWeb.volunteerPost.dto.CreateVolunteerPostRequest;
 import com.donation.DonationWeb.volunteerPost.dto.UpdateVolunteerPostRequest;
-import com.donation.DonationWeb.volunteerPost.dto.VolunteerPostResponse;
 import com.donation.DonationWeb.volunteerPost.repository.VolunteerPostRepository;
-import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -61,8 +60,11 @@ public class VolunteerPostServiceImp implements VolunteerPostService {
         VolunteerPost findPost = findById(volunteerPostId);
 
         if (postMemberValidation(findPost, loginId)) {
-                Category findCategory = categoryService.findByName(request.getCategoryName());
+            if(categoryExist(request.getCategoryNum())){
+                Category findCategory = categoryService.findById(request.getCategoryNum());
                 volunteerPostRepository.update(request,findPost,findCategory);
+            }else
+                volunteerPostRepository.update(request,findPost,null);
         }
         else {
             throw new PostException("업데이트가 실패 하였습니다");
@@ -98,6 +100,13 @@ public class VolunteerPostServiceImp implements VolunteerPostService {
         Member findByLoginId = memberService.findById(loginId);
 
         if(findByLoginId.getId()==volunteerPost.getMember().getId() ){
+            return true;
+        }
+
+        return false;
+    }
+    private boolean categoryExist(Long categoryId) {//카테고리 변경
+        if (categoryId!=null){
             return true;
         }
 

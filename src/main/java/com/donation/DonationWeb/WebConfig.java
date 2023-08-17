@@ -2,10 +2,7 @@ package com.donation.DonationWeb;
 
 import com.donation.DonationWeb.argumentresolver.LoginMemberIdArgumentResolver;
 import com.donation.DonationWeb.filter.CorsFilter;
-import com.donation.DonationWeb.interceptor.CheckUserAccessInterceptor;
-import com.donation.DonationWeb.interceptor.LoginCheckInterceptor;
-import com.donation.DonationWeb.interceptor.MemberRoleCheckInterceptor;
-import com.donation.DonationWeb.interceptor.PostLoginCheckInterceptor;
+import com.donation.DonationWeb.interceptor.*;
 import com.donation.DonationWeb.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -39,13 +36,23 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/user/{id}/**").excludePathPatterns("/api/user/idCheck", "/api/user/nickNameCheck", "/api/user/logout", "/api/user/login", "/api/user/join");
         registry.addInterceptor(new PostLoginCheckInterceptor())
                 .order(2)
-                .addPathPatterns("/api/post/**");
+                .addPathPatterns("/api/post/**","/api/volunteerPost/**","/api/reviewPost/**");
         registry.addInterceptor(memberRoleCheckInterceptor())
                 .order(3)
                 .addPathPatterns("/api/post");
+        registry.addInterceptor(adminLoginCheckInterceptor())
+                .order(5)
+                .addPathPatterns("/api/admin/**").excludePathPatterns("/api/admin/login", "/api/admin/logout");
+
 
 
     }
+
+    @Bean
+    public AdminLoginCheckInterceptor adminLoginCheckInterceptor(){
+        return new AdminLoginCheckInterceptor();
+    }
+
 
     //argumentResolvers등록
     @Override

@@ -1,11 +1,7 @@
 package com.donation.DonationWeb.controller;
 
 import com.donation.DonationWeb.argumentresolver.Login;
-import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.VolunteerPost;
-import com.donation.DonationWeb.post.dto.PostListResponse;
-import com.donation.DonationWeb.post.dto.PostResponse;
-import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.volunteerPost.dto.*;
 import com.donation.DonationWeb.volunteerPost.service.VolunteerPostService;
 import lombok.RequiredArgsConstructor;

@@ -2,10 +2,8 @@ package com.donation.DonationWeb.controller;
 
 import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.domain.ReviewPost;
-import com.donation.DonationWeb.domain.VolunteerPost;
 import com.donation.DonationWeb.reviewPost.dto.*;
 import com.donation.DonationWeb.reviewPost.service.ReviewPostService;
-import com.donation.DonationWeb.volunteerPost.dto.*;
 import com.donation.DonationWeb.volunteerPost.dto.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +47,6 @@ public class ReviewPostController {
         List<ReviewPost> findPosts = reviewPostService.findByCategory(name, page);
         List<ReviewPostListResponse> collect = findPosts.stream().map((m) -> ReviewPostListResponse.createInstance(m)).collect(Collectors.toList());
         return Result.createInstance(collect);
-    }
-
-    @GetMapping("/{postTitle}") //기부 게시글 제목으로 기부 게시글의 후기 게시물 조회
-    public Object findByPostTitle(@PathVariable String postTitle) {
-        ReviewPost reviewPost = reviewPostService.findByPostTitle(postTitle);
-        return ReviewPostResponse.createInstance(reviewPost);
     }
 
     @PatchMapping("/{reviewPostId}")

@@ -1,5 +1,6 @@
 package com.donation.DonationWeb.domain;
 
+import com.donation.DonationWeb.domain.status.PostStatus;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.volunteerPost.dto.UpdateVolunteerPostRequest;
 import lombok.AccessLevel;
@@ -21,14 +22,12 @@ import java.util.List;
 public class VolunteerPost extends ObjectTime {
 
     @Builder
-    public VolunteerPost(String title, String content, PostStatus postStatus, Category categorie, Member member, List<Comment> commemts, List<InterestPost> interestPosts, Integer needAmount, Integer currentParticipantAmount) {
+    public VolunteerPost(String title, String content, PostStatus postStatus, Category categorie, Member member, Integer needAmount, Integer currentParticipantAmount) {
         this.title = title;
         this.content = content;
         this.postStatus = postStatus;
         this.categorie = categorie;
         this.member = member;
-        this.commemts = commemts;
-        this.interestPosts = interestPosts;
         this.needAmount = needAmount;
         this.currentParticipantAmount = currentParticipantAmount;
     }
@@ -53,22 +52,22 @@ public class VolunteerPost extends ObjectTime {
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category categorie;
 
     //카테고리 연관관계 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
-    @OneToMany(mappedBy = "volunteer_post")
+    @OneToMany(mappedBy = "volunteerPost")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteer_post")
-    private List<Comment> commemts = new ArrayList<>();
+    @OneToMany(mappedBy = "volunteerPost")
+    private List<VolunteerComment> volunteerComments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteer_post")
-    private List<InterestPost> interestPosts = new ArrayList<>();
+    @OneToMany(mappedBy = "volunteerPost")
+    private List<InterestVolunteerPost> interestVolunteerPosts = new ArrayList<>();
 
     @Column(name = "need_amount")
     private Integer needAmount;

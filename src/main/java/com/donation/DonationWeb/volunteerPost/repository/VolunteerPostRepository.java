@@ -1,7 +1,6 @@
 package com.donation.DonationWeb.volunteerPost.repository;
 
 import com.donation.DonationWeb.domain.Category;
-import com.donation.DonationWeb.domain.Participant;
 import com.donation.DonationWeb.domain.VolunteerPost;
 import com.donation.DonationWeb.volunteerPost.dto.UpdateVolunteerPostRequest;
 

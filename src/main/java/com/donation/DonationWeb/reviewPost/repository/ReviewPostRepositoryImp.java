@@ -3,7 +3,6 @@ package com.donation.DonationWeb.reviewPost.repository;
 import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.domain.ReviewPost;
-import com.donation.DonationWeb.domain.VolunteerPost;
 import com.donation.DonationWeb.reviewPost.dto.UpdateReviewPostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +34,10 @@ public class ReviewPostRepositoryImp implements ReviewPostRepository{
     @Override
     public Optional<ReviewPost> findByIdLeftJoin(Long reviewPostId) {
         return em.createQuery("select r from ReviewPost r" +
-                        " join fetch r.member m" +
                         " join fetch r.categorie c" +
                         " join fetch r.post p" +
-                        " left join fetch r.commemts co" +
+                        " join fetch p.member m" +
+                        " left join fetch r.reviewComments co" +
                         " where r.id=:reviewPostId ", ReviewPost.class) //레프트 조인해도 postId 값을 주니까 괜찮음
                 .setParameter("reviewPostId", reviewPostId).getResultList().stream().findAny();
     }
@@ -49,9 +48,9 @@ public class ReviewPostRepositoryImp implements ReviewPostRepository{
             page=page+1;
         }
         return em.createQuery("select r from ReviewPost r" +
-                        " join fetch r.member m" +
                         " join fetch r.categorie c" +
                         " join fetch r.post p" +
+                        " join fetch p.member m" +
                         " order by r.createTime DESC ", ReviewPost.class)
                 .setFirstResult((page - 1) * 10)
                 .setMaxResults(page*10)
@@ -65,26 +64,15 @@ public class ReviewPostRepositoryImp implements ReviewPostRepository{
         }
         log.info("Page={}",page);
         return em.createQuery("select r from ReviewPost r" +
-                        " join fetch r.member m" +
                         " join fetch r.categorie c" +
                         " join fetch r.post p" +
+                        " join fetch p.member m" +
                         " where r.categorie.id=:category_id" +
                         " order by r.createTime DESC ",ReviewPost.class)
                 .setParameter("category_id",categoryId)
                 .setFirstResult((page-1)*10)
                 .setMaxResults(page*10)
                 .getResultList();
-    }
-
-    @Override
-    public Optional<ReviewPost> findByPostTitle(Long postId) {
-        return em.createQuery("select r from ReviewPost r" +
-                        " join fetch r.member m" +
-                        " join fetch r.categorie c" +
-                        " join fetch r.post p" +
-                        " left join fetch r.commemts co" +
-                        " where r.post.id=:postId ", ReviewPost.class) //레프트 조인해도 postId 값을 주니까 괜찮음
-                .setParameter("postId", postId).getResultList().stream().findAny();
     }
 
     @Override

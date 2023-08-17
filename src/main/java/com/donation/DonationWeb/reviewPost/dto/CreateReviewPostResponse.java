@@ -1,9 +1,6 @@
 package com.donation.DonationWeb.reviewPost.dto;
 
-import com.donation.DonationWeb.domain.PostStatus;
 import com.donation.DonationWeb.domain.ReviewPost;
-import com.donation.DonationWeb.domain.VolunteerPost;
-import com.donation.DonationWeb.volunteerPost.dto.CreateVolunteerPostResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +16,6 @@ public class CreateReviewPostResponse {
     private String content;
     private String categoryName;
     private Long categoryNum;
-    private String postTitle;
     private Long postId;
     private String memberId;
     private String memberNickname;
@@ -27,7 +23,7 @@ public class CreateReviewPostResponse {
     private LocalDateTime updateTime;
 
     public static CreateReviewPostResponse createInstance(ReviewPost reviewPost) {
-        return new CreateReviewPostResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getContent(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getTitle(), reviewPost.getPost().getId(),
-                reviewPost.getMember().getMemberId(), reviewPost.getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime());
+        return new CreateReviewPostResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getContent(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getId(),
+                reviewPost.getPost().getMember().getMemberId(), reviewPost.getPost().getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime());
     }
 }

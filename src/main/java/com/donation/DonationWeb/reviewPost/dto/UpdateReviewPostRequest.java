@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -14,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 public class UpdateReviewPostRequest {
     private String title;
     private String content;
-    private String categoryName;
-    private String postTitle;
+    private Long categoryNum;
+    private Long postId;
 
 }

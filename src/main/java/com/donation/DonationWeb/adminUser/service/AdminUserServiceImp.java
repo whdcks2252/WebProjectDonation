@@ -1,5 +1,6 @@
 package com.donation.DonationWeb.adminUser.service;
 
+import com.donation.DonationWeb.adminUser.dto.CreateAdminUserRequest;
 import com.donation.DonationWeb.adminUser.repository.AdminUserRepository;
 import com.donation.DonationWeb.domain.AdminUser;
 import com.donation.DonationWeb.domain.Member;
@@ -32,8 +33,18 @@ public class AdminUserServiceImp implements AdminUserService{
     }
 
     @Override
-    public Member findById(Long memberId) {
-        return null;
+    public AdminUser findById(Long AdminId) {
+        return findByIdUserPresent(adminUserRepository.findById(AdminId),AdminId);
+    }
+
+    @Override
+    public AdminUser save(CreateAdminUserRequest createAdminUserRequest) {
+        return adminUserRepository.save(createAdminUserRequest.toEntity());
+    }
+
+    private AdminUser findByIdUserPresent(Optional<AdminUser> adminUser,Long AdminId){
+        return adminUser.orElseThrow(()->new UserException("not found AdminId : " + AdminId));
+
     }
 
 }

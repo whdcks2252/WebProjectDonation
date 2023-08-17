@@ -1,6 +1,9 @@
 package com.donation.DonationWeb.volunteerPost.dto;
 
-import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.Category;
+import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.VolunteerPost;
+import com.donation.DonationWeb.domain.status.PostStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

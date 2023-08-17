@@ -20,4 +20,15 @@ public class AdminUserRepositoryImp implements AdminUserRepository{
                 .setParameter("loginId", adminUserId)
                 .getResultList().stream().findAny(); //null일수도 있으므로
     }
+
+    @Override
+    public Optional<AdminUser> findById(Long adminId) {
+        return Optional.ofNullable(em.find(AdminUser.class, adminId));
+    }
+
+    @Override
+    public AdminUser save(AdminUser adminUser) {
+        em.persist(adminUser);
+        return adminUser;
+    }
 }

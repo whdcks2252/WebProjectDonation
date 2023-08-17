@@ -1,7 +1,6 @@
 package com.donation.DonationWeb.reviewPost.dto;
 
 import com.donation.DonationWeb.domain.ReviewPost;
-import com.donation.DonationWeb.volunteerPost.dto.VolunteerPostResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +19,6 @@ public class ReviewPostResponse {
     private String content;
     private String categoryName;
     private Long categoryNum;
-    private String postTitle;
     private Long postId;
     private String memberId;
     private String memberNickname;
@@ -29,10 +27,10 @@ public class ReviewPostResponse {
     private List<CommentDto> comments;
 
     public static ReviewPostResponse createInstance(ReviewPost reviewPost) {
-        return new ReviewPostResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getContent(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getTitle(), reviewPost.getPost().getId(),
-                reviewPost.getMember().getMemberId(), reviewPost.getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime(),
-                reviewPost.getCommemts().stream().
-                        map(comment -> ReviewPostResponse.CommentDto.builder().content(comment.getContent()).commentId(comment.getId())
+        return new ReviewPostResponse(reviewPost.getId(), reviewPost.getTitle(), reviewPost.getContent(), reviewPost.getCategorie().getCategoryName(),reviewPost.getCategorie().getId(), reviewPost.getPost().getId(),
+                reviewPost.getPost().getMember().getMemberId(), reviewPost.getPost().getMember().getMemberNickname(), reviewPost.getCreateTime(), reviewPost.getUpdateTime(),
+                reviewPost.getReviewComments().stream().
+                        map(comment -> CommentDto.builder().content(comment.getContent()).commentId(comment.getId())
                                 .memberId(comment.getMember().getMemberId())
                                 .updateTime(comment.getUpdateTime()).build()).collect(Collectors.toList())
         );
