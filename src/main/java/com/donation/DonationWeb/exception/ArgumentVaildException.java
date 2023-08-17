@@ -34,7 +34,6 @@ public class ArgumentVaildException {
     }
 
     //DB에서 조회후 값이 없을시 에러
-    //회원가입 실패 후 오류처리401
     @ExceptionHandler(LoginException.class)
     public Object loginException(LoginException e){
         Map<String, Object> errormessage = new HashMap<>();
@@ -45,9 +44,16 @@ public class ArgumentVaildException {
 
 
     //DB에서 조회후 값이 없을시 에러
-    //회원가입 실패 후 오류처리401
     @ExceptionHandler(UserException.class)
     public Object userException(UserException e){
+        Map<String, Object> errormessage = new HashMap<>();
+        errormessage.put("message", e.getMessage());
+
+        return errormessage;
+    }
+    //멤버권한요청서 에러처리
+    @ExceptionHandler(MemberAuthorityRequestException.class)
+    public Object userException(MemberAuthorityRequestException e){
         Map<String, Object> errormessage = new HashMap<>();
         errormessage.put("message", e.getMessage());
 

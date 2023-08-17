@@ -85,8 +85,15 @@ public class PostServiceImp implements PostService {
 
         }else
         {
-            throw   new PostException("게시물 삭제가 실패 햐엿습니다");
+            throw  new PostException("게시물 삭제가 실패 햐엿습니다");
         }
+
+    }
+    @Transactional
+    @Override//포스트 금액 변경
+    public void updateCurrentAmount(Long postId, Integer price) {
+        Post findPost = postRepository.findByIdLock(postId).orElseThrow(() -> new PostException("게시물을 찾을 수 없습니다 postId: " + postId));
+        findPost.updateCurrentAmount(price);
 
     }
 

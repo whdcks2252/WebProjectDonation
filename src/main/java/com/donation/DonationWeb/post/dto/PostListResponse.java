@@ -1,7 +1,7 @@
 package com.donation.DonationWeb.post.dto;
 
 import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.domain.PostStatus;
+import com.donation.DonationWeb.domain.status.PostStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

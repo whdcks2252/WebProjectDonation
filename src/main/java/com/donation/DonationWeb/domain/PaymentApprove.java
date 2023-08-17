@@ -1,5 +1,6 @@
 package com.donation.DonationWeb.domain;
 
+import com.donation.DonationWeb.domain.status.CancelStatus;
 import com.donation.DonationWeb.kakaoPay.dto.KakaoApproveResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class PaymentApprove {
 
     @Builder
-    public PaymentApprove(String donationUUID, String tid, String cid, LocalDateTime created_at, LocalDateTime approved_at, Integer price, Integer tax_free, Member member, Post post,CancelStatus cancelStatus) {
+    public PaymentApprove(String donationUUID, String tid, String cid, LocalDateTime created_at, LocalDateTime approved_at, Integer price, Integer tax_free, Member member, Post post, CancelStatus cancelStatus) {
         this.donationUUID = donationUUID;
         this.tid = tid;
         this.cid = cid;
@@ -45,11 +46,11 @@ public class PaymentApprove {
     private CancelStatus cancelStatus;//환불 상태
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "member_num",nullable = false)
+    @JoinColumn(name = "member_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "post_num",nullable = false)
+    @JoinColumn(name = "post_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Post post;
 
 

@@ -1,6 +1,8 @@
 package com.donation.DonationWeb.member.dto;
 
 import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.status.MemberRole;
+import com.donation.DonationWeb.domain.status.ServiceAgreement;
 import com.donation.DonationWeb.util.BCryptor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,6 +58,7 @@ public class AddMemberRequest {
                 .memberId(this.memberId).memberNickname(this.memberNickname)
                 .password(BCryptor.encrypt(this.password)).memberName(this.memberName).memberPhone(this.memberPhone)
                 .email(this.email).svcAge(serviceAgreement).address(new Address(this.city,this.street,this.zipcode))
+                .memberRole(MemberRole.NON_AUTHORIZED)
                 .build();
     }
 

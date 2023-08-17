@@ -3,14 +3,12 @@ package com.donation.DonationWeb.post.dto;
 import com.donation.DonationWeb.domain.Category;
 import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
-import com.donation.DonationWeb.domain.PostStatus;
-import lombok.AllArgsConstructor;
+import com.donation.DonationWeb.domain.status.PostStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor

@@ -36,19 +36,7 @@ public class CommentServiceImp implements CommentService {
 
         return commentRepository.save(createComment);
     }
-    @Transactional
-    @Override
-    public Comment createNestedComment(AddCommentRequest addComment, Long commentId, Long loginId) {
-        //댓글작성할 유저 찾기
-        Member findMember = memberService.findById(loginId);
-        //부모 댓글 찾기
-        Comment findParentComment = commentRepository.findCommentWithPost(commentId).orElseThrow(() -> new CommentException(" not found commentId : " + commentId));
-        //대댓글 생성
-        Comment createComment = addComment.toEntity(findParentComment.getPost(),findMember);
-      //  createComment.setParentComment(findParentComment);
 
-        return commentRepository.save(createComment);
-    }
 
     @Transactional
     @Override
@@ -84,8 +72,8 @@ public class CommentServiceImp implements CommentService {
         return commentRepository.findById(commentId).orElseThrow(() -> new CommentException(" not found commentId : " + commentId));
     }
 
-    private Boolean commentAndMemberCheck(long PostId,long MemberId) {
-        if (PostId == MemberId) {
+    private Boolean commentAndMemberCheck(long commentMemberId,long memberId) {
+        if (commentMemberId == memberId) {
             return true;
         }
         else

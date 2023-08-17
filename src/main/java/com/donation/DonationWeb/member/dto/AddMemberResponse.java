@@ -1,7 +1,7 @@
 package com.donation.DonationWeb.member.dto;
 
 import com.donation.DonationWeb.domain.Member;
-import com.donation.DonationWeb.domain.ServiceAgreement;
+import com.donation.DonationWeb.domain.status.ServiceAgreement;
 import lombok.Getter;
 
 @Getter

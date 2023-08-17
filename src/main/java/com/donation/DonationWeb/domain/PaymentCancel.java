@@ -36,7 +36,7 @@ public class PaymentCancel {
     private  Integer price;
 
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "paymentApprove_num",nullable = false)
+    @JoinColumn(name = "paymentApprove_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private PaymentApprove paymentApprove;
 
     private LocalDateTime created_at;

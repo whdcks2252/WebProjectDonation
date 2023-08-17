@@ -9,6 +9,7 @@ import com.donation.DonationWeb.member.dto.NicknameCheckRequest;
 import com.donation.DonationWeb.member.repository.MemberRepository;
 import com.donation.DonationWeb.util.BCryptor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImp implements MemberService{
 
     private final MemberRepository memberRepository;
@@ -70,7 +72,8 @@ public class MemberServiceImp implements MemberService{
         Optional<Member> findByMemberId = memberRepository.findByMemberId(memberId);
         Member member = findByMemberId.orElseThrow(()->new UserException("not found : " + memberId));
 
-        if (!findByMemberId.isPresent()&&BCryptor.isMatch(member.getPassword(),password)) {
+        if (!(findByMemberId.isPresent()&&BCryptor.isMatch(password,member.getPassword()))) {
+            log.info("test");
             return Optional.empty();
         }
 
@@ -83,10 +86,10 @@ public class MemberServiceImp implements MemberService{
         Optional<Member> idCheck = memberRepository.idCheck(id.getMemberId());
         if (idCheck.isPresent())
         {
-            return "존재하는 아이디 입니다.";
+            return "fail";
         }
         else {
-            return "사용가능한 아이디 입니다.";
+            return "success";
         }
     }
 
@@ -95,10 +98,10 @@ public class MemberServiceImp implements MemberService{
         Optional<Member> nickNameCheck = memberRepository.nickNameCheck(nickName.getNickName());
         if (nickNameCheck.isPresent())
         {
-            return "존재하는 닉네임 입니다.";
+            return "fail";
         }
         else {
-            return "사용가능한 닉네임 입니다.";
+            return "success";
         }
     }
 

@@ -35,11 +35,11 @@ public class PaymentReady {
     private Integer price;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "member_num",nullable = false)
+    @JoinColumn(name = "member_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "post_num",nullable = false)
+    @JoinColumn(name = "post_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Post post;
 
 

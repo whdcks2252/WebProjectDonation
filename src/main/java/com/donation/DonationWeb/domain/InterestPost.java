@@ -21,11 +21,11 @@ public class InterestPost extends ObjectTime{
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "post_num",nullable = false)
+    @JoinColumn(name = "post_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
    private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @Builder
