@@ -61,6 +61,9 @@ public class Post extends ObjectTime {
     @OneToMany(mappedBy = "post")
     private List<InterestPost> interestPosts = new ArrayList<>();
 
+    @OneToOne(mappedBy = "post", fetch = FetchType.LAZY)
+    private ReviewPost reviewPost;
+
     @Column(name = "target_amount")
     private Integer targetAmount;
     @Column(name = "current_amount")

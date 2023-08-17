@@ -12,6 +12,10 @@ public class AddCommentRequest {
     @NotBlank
     private String content;
 
+    public AddCommentRequest(String content) {
+        this.content = content;
+    }
+
     public Comment toEntity(Post post, Member member) {
         Comment createComment = Comment.builder()
                 .content(content)

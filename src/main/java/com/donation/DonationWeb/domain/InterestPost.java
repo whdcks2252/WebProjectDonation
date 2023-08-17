@@ -24,14 +24,24 @@ public class InterestPost extends ObjectTime{
     @JoinColumn(name = "post_num",nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
    private Post post;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "volunteer_num",nullable = false)
+    private VolunteerPost volunteerPost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_num",nullable = false)
+    private ReviewPost reviewPost;
+
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     @Builder
-    public InterestPost(Post post, Member member) {
+    public InterestPost(Post post, Member member, VolunteerPost volunteerPost, ReviewPost reviewPost) {
 
         this.post = post;
+        this.volunteerPost = volunteerPost;
+        this.reviewPost = reviewPost;
         this.member = member;
     }
 }
