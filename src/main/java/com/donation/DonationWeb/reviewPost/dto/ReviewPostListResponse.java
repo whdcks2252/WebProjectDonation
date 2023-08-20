@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewPostListResponse {
-    private Long VolunteerPostId;
+    private Long reviewPostId;
     private String title;
     private String categoryName;
     private Long categoryNum;

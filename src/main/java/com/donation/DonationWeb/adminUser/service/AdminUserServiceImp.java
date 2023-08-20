@@ -4,6 +4,8 @@ import com.donation.DonationWeb.adminUser.dto.CreateAdminUserRequest;
 import com.donation.DonationWeb.adminUser.repository.AdminUserRepository;
 import com.donation.DonationWeb.domain.AdminUser;
 import com.donation.DonationWeb.domain.Member;
+import com.donation.DonationWeb.domain.MemberAuthorityRequest;
+import com.donation.DonationWeb.domain.status.MemberAuthorityRequestProcess;
 import com.donation.DonationWeb.exception.UserException;
 import com.donation.DonationWeb.util.BCryptor;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +39,23 @@ public class AdminUserServiceImp implements AdminUserService{
         return findByIdUserPresent(adminUserRepository.findById(AdminId),AdminId);
     }
 
+    @Transactional
     @Override
     public AdminUser save(CreateAdminUserRequest createAdminUserRequest) {
         return adminUserRepository.save(createAdminUserRequest.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void approve(MemberAuthorityRequest memberAuthorityRequest) {
+        memberAuthorityRequest.updateProcess(MemberAuthorityRequestProcess.APPROVE);
+        memberAuthorityRequest.getMember().updateMemberAuth();
+    }
+
+    @Transactional
+    @Override
+    public void reject(MemberAuthorityRequest memberAuthorityRequest) {
+        memberAuthorityRequest.updateProcess(MemberAuthorityRequestProcess.REJECT);
     }
 
     private AdminUser findByIdUserPresent(Optional<AdminUser> adminUser,Long AdminId){

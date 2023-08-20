@@ -23,7 +23,7 @@ public class ReviewPostController {
 
     private final ReviewPostService reviewPostService;
 
-    @PostMapping
+    @PostMapping("/{postId}")
     public Object createReviewPost(@RequestBody @Validated CreateReviewPostRequest request, @Login Long id){
         log.info("id={}",id);
         return new ResponseEntity<>(CreateReviewPostResponse.createInstance(reviewPostService.savePost(request,id)), HttpStatus.CREATED);

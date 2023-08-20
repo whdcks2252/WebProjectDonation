@@ -1,10 +1,14 @@
 package com.donation.DonationWeb.controller;
 
+import com.donation.DonationWeb.MemberAuthorityRequest.dto.MemberAuthorityRequestResponse;
+import com.donation.DonationWeb.MemberAuthorityRequest.service.MemberAuthorityRequestService;
 import com.donation.DonationWeb.adminUser.dto.LoginAdminUserRequest;
 import com.donation.DonationWeb.adminUser.dto.LoginAdminUserResponse;
+import com.donation.DonationWeb.adminUser.dto.ManageMemberAuthorityRequest;
 import com.donation.DonationWeb.adminUser.service.AdminUserService;
 import com.donation.DonationWeb.argumentresolver.Login;
 import com.donation.DonationWeb.domain.*;
+import com.donation.DonationWeb.domain.status.MemberAuthorityRequestProcess;
 import com.donation.DonationWeb.exception.LoginException;
 import com.donation.DonationWeb.login.dto.LoginMemberRequest;
 import com.donation.DonationWeb.login.dto.LoginResponse;
@@ -48,6 +52,7 @@ public class AdminUserController {
     private final VolunteerPostService volunteerPostService;
     private final ParticipantService participantService;
     private final ReviewPostService reviewPostService;
+    private final MemberAuthorityRequestService memberAuthorityRequestService;
 
 
     @PostMapping("/login")
@@ -162,5 +167,30 @@ public class AdminUserController {
 
     }
 
+    @GetMapping
+    public Object findListPage(@RequestParam(defaultValue="1") Integer page) {
+        List<MemberAuthorityRequest> findMemberAuthorityRequests = memberAuthorityRequestService.findByPage(page);
+
+        List<MemberAuthorityRequestResponse> collect = findMemberAuthorityRequests.stream().map((m) -> MemberAuthorityRequestResponse.createInstance(m)).collect(Collectors.toList());
+        return Result.createInstance(collect);
+    }
+
+    @GetMapping("/memberAuthorityRequest/{id}")
+    public Object findMemberAuthorityRequest(@PathVariable Long id) {
+        MemberAuthorityRequest findMemberAuthorityRequest = memberAuthorityRequestService.findById(id);
+        return new ResponseEntity<>(MemberAuthorityRequestResponse.createInstance(findMemberAuthorityRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/memberAuthorityRequest/{id}")
+    public Object approveMemberAuthorityRequest(@PathVariable Long id, @RequestBody @Validated ManageMemberAuthorityRequest memberAuthorityRequest) throws Exception {
+        MemberAuthorityRequest findMemberAuthorityRequest = memberAuthorityRequestService.findById(id);
+        if(memberAuthorityRequest.getMemberAuthorityRequestProcess().equals("approve")){
+            adminUserService.approve(findMemberAuthorityRequest);
+        }
+        else if(memberAuthorityRequest.getMemberAuthorityRequestProcess().equals("reject")){
+            adminUserService.reject(findMemberAuthorityRequest);
+        }
+        return new ResponseEntity<>(MemberAuthorityRequestResponse.createInstance(findMemberAuthorityRequest), HttpStatus.OK);
+    }
 
 }

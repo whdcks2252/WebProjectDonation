@@ -43,6 +43,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(adminLoginCheckInterceptor())
                 .order(5)
                 .addPathPatterns("/api/admin/**").excludePathPatterns("/api/admin/login", "/api/admin/logout");
+        registry.addInterceptor(postExpirationCheckInterceptor())
+                .order(6)
+                .addPathPatterns("/api/reviewPost/**").excludePathPatterns("/api/reviewPost/{reviewPostId}/comment");
 
 
 
@@ -51,6 +54,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public AdminLoginCheckInterceptor adminLoginCheckInterceptor(){
         return new AdminLoginCheckInterceptor();
+    }
+
+    @Bean
+    public PostExpirationCheckInterceptor postExpirationCheckInterceptor(){
+        return new PostExpirationCheckInterceptor();
     }
 
 

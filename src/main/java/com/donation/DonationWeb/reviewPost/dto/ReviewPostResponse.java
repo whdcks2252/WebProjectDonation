@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewPostResponse {
-    private Long VolunteerPostId;
+    private Long reviewPostId;
     private String title;
     private String content;
     private String categoryName;
