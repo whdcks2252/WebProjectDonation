@@ -6,7 +6,6 @@ import com.donation.DonationWeb.domain.Member;
 import com.donation.DonationWeb.domain.Post;
 import com.donation.DonationWeb.exception.PostException;
 import com.donation.DonationWeb.member.service.MemberService;
-import com.donation.DonationWeb.post.dto.DeletePostRequest;
 import com.donation.DonationWeb.post.dto.UpdatePostRequest;
 import com.donation.DonationWeb.post.dto.AddPostRequest;
 import com.donation.DonationWeb.post.repository.PostRepository;
@@ -94,7 +93,6 @@ public class PostServiceImp implements PostService {
     public void updateCurrentAmount(Long postId, Integer price) {
         Post findPost = postRepository.findByIdLock(postId).orElseThrow(() -> new PostException("게시물을 찾을 수 없습니다 postId: " + postId));
         findPost.updateCurrentAmount(price);
-
     }
 
 

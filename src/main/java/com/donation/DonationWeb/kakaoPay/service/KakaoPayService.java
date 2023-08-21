@@ -98,7 +98,14 @@ public class KakaoPayService {
                 KakaoApproveResponse.class);
         Post findPost = findPaymentReady.getPost();
         paymentApproveService.save(approveResponse, findPost, findPaymentReady.getMember());
-        postService.updateCurrentAmount(postId,approveResponse.getAmount().getTotal());
+
+        try {
+            postService.updateCurrentAmount(postId, approveResponse.getAmount().getTotal());
+        } catch (Exception e) {//결제중 오류시 카카오페이도 취소 요청
+            paymentError(approveResponse);
+            throw new KakaoPayException("결제중 오류");
+        }
+
         return approveResponse;
     }
 
@@ -160,4 +167,22 @@ public class KakaoPayService {
         }
     }
 
+    private void paymentError(KakaoApproveResponse approveResponse){
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("cid", cid);
+        parameters.add("tid", approveResponse.getTid());
+        parameters.add("cancel_amount", String.valueOf(approveResponse.getAmount().getTotal()));
+        parameters.add("cancel_tax_free_amount", String.valueOf(approveResponse.getAmount().getTax_free()));
+
+        // 파라미터, 헤더
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+
+        // 외부에 보낼 url
+        RestTemplate restTemplate = new RestTemplate();
+
+        KakaoCancelResponse cancelResponse = restTemplate.postForObject(
+                "https://kapi.kakao.com/v1/payment/cancel",
+                requestEntity,
+                KakaoCancelResponse.class);
+    }
 }
