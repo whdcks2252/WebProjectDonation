@@ -100,6 +100,11 @@ public class TestDataInit {
         ReviewPost reviewPost = reviewPostService.savePost(new CreateReviewPostRequest("title", "deedede", category.getCategoryName(), post.getId()), save.getId());
         AdminUser adminUser = adminUserService.save(new CreateAdminUserRequest("chooh1010", "1234", "admin"));
 
+        for (int i =0;i<100;i++) {
+            memberServiceImp.save(new AddMemberRequest("a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i),"a"+String.valueOf(i), ServiceAgreement.YES));
+        }
+
+
 
 
 
