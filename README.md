@@ -9,6 +9,7 @@
 <br>MYSQL 8
 <br>H2DB
 <br>REDIS
+<br>DOCKER
 
 
 서버아키텍처
