@@ -4,7 +4,7 @@
 
 <br>기술스택
 <br>JAVA 11
-<br>SPRING BOOT 2.7.12<\br>
+<br>SPRING BOOT 2.7.12
 <br>JPA
 <br>MYSQL 8
 <br>H2DB
