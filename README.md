@@ -4,12 +4,12 @@
 
 기술스택
 
-<br>JAVA 11<\br>
+<br>JAVA 11
 <br>SPRING BOOT 2.7.12<\br>
-<br>JPA<\br>
-<br>MYSQL 8<\br>
-<br>H2DB<\br>
-<br>REDIS<\br>
+<br>JPA
+<br>MYSQL 8
+<br>H2DB
+<br>REDIS
 
 
 서버아키텍처
