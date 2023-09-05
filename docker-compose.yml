@@ -1,20 +1,39 @@
 version: "3"
 services:
-  mysql:
+  mysql_master:
     image: mysql
-    container_name: mysql
-    volumes:
-      - ./db/conf.d:/etc/mysql/conf.d
-      - ./db/data:/var/lib/mysql
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    user: root
+    build:
+      context: ./mysql_master
+      dockerfile: Dockerfile
     env_file: .env
-    environment:
-      TZ: Asia/Seoul
+    stdin_open: true
+    tty: true
     ports:
-      - "3306:3306"
+      - 3306:3306
     networks:
-      - docker_net
+      dock_net:
+        ipv4_address: 172.16.0.10
+    container_name: mysql_master
     restart: always
+
+  mysql_slave:
+    image: mysql
+    build:
+      context: ./mysql_slave
+      dockerfile: Dockerfile
+    env_file: .env
+    user: root
+    stdin_open: true
+    tty: true
+    ports:
+      - 3307:3306
+    networks:
+      dock_net:
+        ipv4_address: 172.16.0.11
+    depends_on:
+      - mysql_master
+    container_name: mysql_slave
 
   myredis:
     image: redis
@@ -22,7 +41,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - docker_net
+      - dock_net
 
   springbootapp:
     build: .
@@ -30,12 +49,15 @@ services:
     ports:
       - "5000:9090"
     depends_on:
-      - mysql
+      - mysql_master
+      - mysql_slave
       - myredis
     restart: always
     networks:
-      - docker_net
+      - dock_net
 networks:
-  docker_net:
+  dock_net:
     driver: bridge
-    name: docker_net
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16
